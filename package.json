@@ -15,6 +15,10 @@
     "dist",
     "index.d.ts"
   ],
+  "keywords": [
+    "xenharmonic",
+    "microtonal"
+  ],
   "main": "./dist/main.umd.cjs",
   "module": "./dist/main.js",
   "types": "./dist/main.d.ts",
