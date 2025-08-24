@@ -1,11 +1,16 @@
 import type Monzo from './monzo';
-import pUnder20bits from './prime-list.json';
 
-const getPUnder20bits = (i: number) => {
-    if (i >= pUnder20bits.length) {
-        throw Error('exceeded length');
-    }
-    return pUnder20bits[i];
+/**
+ * returns i-th prime under 20bits
+ * @param i 
+ * @returns 
+ */
+const getPUnder20bits = async (i: number) => {
+  const pUnder20bits = (await import('./prime-list.json')).default;
+  if (i >= pUnder20bits.length) {
+    throw Error('exceeded length');
+  }
+  return pUnder20bits[i];
 };
 
 /**
@@ -73,4 +78,11 @@ const getVenedettiHeight = (mnz: Monzo) => {
     .reduce((prev, cur) => prev * cur, 1n);
 };
 
-export { getCents, getRatio, getTENorm, getTenneyHeight, getVenedettiHeight, getPUnder20bits };
+export {
+  getCents,
+  getRatio,
+  getTENorm,
+  getTenneyHeight,
+  getVenedettiHeight,
+  getPUnder20bits
+};

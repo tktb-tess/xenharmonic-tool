@@ -5,6 +5,7 @@ import {
   getTENorm,
   getTenneyHeight,
   getVenedettiHeight,
+  getPUnder20bits,
 } from './util';
 
 export {
@@ -14,4 +15,5 @@ export {
   getTENorm,
   getTenneyHeight,
   getVenedettiHeight,
+  getPUnder20bits,
 };

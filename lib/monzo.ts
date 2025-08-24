@@ -41,15 +41,15 @@ const create = (arr: [number, number][]) => {
   ])[] as Monzo;
 };
 
-const parse = (str: string) => {
+const parse = async (str: string) => {
   if (!str.match(/^(\d+:)?-?\d+(,(\d+:)?-?\d+)*$/g)) {
     throw Error('could not parse');
   }
   const units = str.split(',');
 
-  const mnz: [number, number][] = units.map((s, i) => {
+  const tasks = units.map(async (s, i): Promise<[number, number]> => {
     if (s.match(/^-?\d+$/g)) {
-      const b = getPUnder20bits(i);
+      const b = await getPUnder20bits(i);
       return [b, Number(s)];
     } else if (s.match(/^\d+:-?\d+$/g)) {
       const [b, e] = s.split(':');
@@ -58,7 +58,7 @@ const parse = (str: string) => {
       throw Error('could not parse');
     }
   });
-  return create(mnz);
+  return create(await Promise.all(tasks));
 };
 
 // const fromRatio = (num: bigint, denom: bigint) => {};

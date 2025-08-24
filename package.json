@@ -27,7 +27,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "update": "npx ncu -u && npm i"
+    "update": "npx ncu -u && npm i",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
@@ -36,6 +37,7 @@
     "eslint": "^9.34.0",
     "globals": "^16.3.0",
     "jiti": "^2.5.1",
+    "jsdom": "^26.1.0",
     "npm-check-updates": "^18.0.2",
     "tsx": "^4.20.5",
     "typescript": "~5.9.2",
