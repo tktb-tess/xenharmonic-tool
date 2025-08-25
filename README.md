@@ -8,7 +8,7 @@ Available in both browser and Node.js environments.
 ## usage
 
 ```ts
-import { Monzo, getCents } from '@tktb-tess/xenharmonic-tool';
+import { Monzo, getCents, getRatio, getTenneyHeight } from '@tktb-tess/xenharmonic-tool';
 
 // create from array of [basis, exponent]
 const marvelComma = Monzo.create([
