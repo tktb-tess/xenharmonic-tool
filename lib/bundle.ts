@@ -7,6 +7,8 @@ import {
   getTenneyHeight,
   getVenedettiHeight,
   getPrimesLte,
+  getTemperOutEdos,
+  isTemperedOut,
 } from './util';
 
 export {
@@ -18,4 +20,6 @@ export {
   getTenneyHeight,
   getVenedettiHeight,
   getPrimesLte,
+  getTemperOutEdos,
+  isTemperedOut,
 };

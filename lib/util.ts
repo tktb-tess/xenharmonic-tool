@@ -1,4 +1,5 @@
 import type Monzo from './monzo';
+import type Val from './val';
 import { bailliePSW } from '@tktb-tess/util-fns';
 
 /**
@@ -78,6 +79,41 @@ const getVenedettiHeight = (mnz: Monzo) => {
     .reduce((prev, cur) => prev * cur, 1n);
 };
 
+/**
+ * returns an array of EDOs whose patent val tempers out input monzo
+ * @param mnz
+ * @param maxEdo
+ * @returns
+ */
+const getTemperOutEdos = (mnz: Monzo, maxEdo: number) => {
+  if (maxEdo < 1) throw Error('`maxEdo` must be positive');
+  return [...Array(maxEdo)]
+    .map((_, i) => i + 1)
+    .filter((edo) => {
+      const inner = mnz
+        .map(([b, e]) => Math.round(edo * Math.log2(b)) * e)
+        .reduce((prev, cur) => prev + cur, 0);
+      return inner === 0;
+    });
+};
+
+/**
+ * whether the val tempers out the monzo
+ * @param mnz monzo
+ * @param val val
+ */
+const isTemperedOut = (mnz: Monzo, val: Val) => {
+  const braket = mnz
+    .map(([basis, exp]) => {
+      const m = val.find(([b]) => basis === b);
+      if (!m) throw Error('cannot be found corresponding val basis');
+      const [, vExp] = m;
+      return exp * vExp;
+    })
+    .reduce((prev, cur) => prev + cur, 0);
+  return braket === 0;
+};
+
 export {
   getCents,
   getRatio,
@@ -85,4 +121,6 @@ export {
   getTenneyHeight,
   getVenedettiHeight,
   getPrimesLte,
+  getTemperOutEdos,
+  isTemperedOut,
 };
