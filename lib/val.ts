@@ -71,7 +71,8 @@ const patentValOf = (edo: number, limit: number) => {
   if (edo < 1) throw Error('`edo` must be positive');
   if (limit < 2) throw Error('`limit` must be 2 or larger');
 
-  const pList = getPrimesLte(limit);
+  const pList = getPrimesLte(limit).filter((p) => p <= limit);
+
   const arr = pList.map((p): [number, number] => [
     p,
     Math.round(edo * Math.log2(p)),
