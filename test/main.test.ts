@@ -54,7 +54,7 @@ it('managing empty array correctly', () => {
 
 it('check tempering out Edos', () => {
   const mercatorComma = Monzo.parse('-84,53');
-  const temperingOutEdos = getTemperOutEdos(mercatorComma, 1000);
+  const temperingOutEdos = getTemperOutEdos(1000, mercatorComma);
 
   console.log('temperingOutEdos:', temperingOutEdos);
   expect(temperingOutEdos).toSatisfy((edos: number[]) => {
@@ -63,13 +63,14 @@ it('check tempering out Edos', () => {
 });
 
 describe('detecting tempering out correctly', () => {
-  const val22 = Val.patentValOf(22, 7);
+  const val22 = Val.patentValOf(22, 13);
   const val31 = Val.patentValOf(31, 7);
   const syntonicComma = Monzo.parse('-4,4,-1');
   const archytasComma = Monzo.parse('2:6,3:-2,7:-1');
   const marvelComma = Monzo.parse('-5,2,2,-1');
   console.log('val22:', val22);
   console.log('val31:', val31);
+
 
   it('marvel comma', () => {
     expect(marvelComma).toSatisfy((comma: Monzo) =>

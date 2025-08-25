@@ -85,15 +85,17 @@ const getVenedettiHeight = (mnz: Monzo) => {
  * @param maxEdo
  * @returns
  */
-const getTemperOutEdos = (mnz: Monzo, maxEdo: number) => {
+const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
   if (maxEdo < 1) throw Error('`maxEdo` must be positive');
   return [...Array(maxEdo)]
     .map((_, i) => i + 1)
     .filter((edo) => {
-      const inner = mnz
-        .map(([b, e]) => Math.round(edo * Math.log2(b)) * e)
-        .reduce((prev, cur) => prev + cur, 0);
-      return inner === 0;
+      return monzos.every((mnz) => {
+        const inner = mnz
+          .map(([b, e]) => Math.round(edo * Math.log2(b)) * e)
+          .reduce((prev, cur) => prev + cur, 0);
+        return inner === 0;
+      });
     });
 };
 

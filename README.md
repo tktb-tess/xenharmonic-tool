@@ -32,15 +32,17 @@ console.log(getCents(marvelComma)); // 7.711522991318361
 console.log(getRatio(marvelComma)); // [225n, 224n]
 console.log(getTenneyHeight(marvelComma)); // 15.62113611327464
 
-// gets an array of EDOs whose patent val tempers out the monzo
-console.log(getTemperOutEdos(marvelComma, 100)); //
+console.log(Monzo.stringify(marvelComma)): // 2:-5,3:2,5:2,7:-1
+
+// gets an array of EDOs whose patent val tempers out the monzos
+console.log(getTemperOutEdos(100, marvelComma, syntonicComma));
 
 ```
 
 ### Val
 
 ```ts
-import { Val, isTemperedOut } from '@tktb-tess/xenharmonic-tool';
+import { Val, Monzo, isTemperedOut } from '@tktb-tess/xenharmonic-tool';
 
 // create from array of [basis, exponent]
 const sampleVal = Val.create([
@@ -58,14 +60,12 @@ const sampleVal2 = Val.parse('19,30,44,53');
 // creates 13-limit patent val for 22EDO
 const patentValFor22Edo = Val.patentValOf(22, 13);
 
+console.log(Monzo.stringify(patentValFor22Edo)): // 2;22,3;35,5;51,7;62,11;76,13;81
 
 const marvelComma = Monzo.parse('-5,2,2,-1');
 
 // whether or not the val tempers out the monzo
 console.log(isTemperedOut(marvelComma, patentValFor22Edo)); // true
-
-
-
 
 ```
 
