@@ -19,6 +19,7 @@
     "type": "git",
     "url": "https://github.com/tktb-tess/xenharmonic-tool.git"
   },
+  "homepage": "https://github.com/tktb-tess/xenharmonic-tool/blob/main/README.md",
   "main": "./dist/bundle.umd.cjs",
   "module": "./dist/bundle.js",
   "types": "./dist/bundle.d.ts",
