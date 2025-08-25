@@ -5,7 +5,9 @@ Functions and data in Xenharmonic theory
 Available in both browser and Node.js environments.
 
 
-## usage
+## Usage
+
+### Monzo
 
 ```ts
 import { Monzo, getCents, getRatio, getTenneyHeight } from '@tktb-tess/xenharmonic-tool';
@@ -25,10 +27,20 @@ const syntonicComma = Monzo.parse('2:-4,3:4,5:-1');
 // a following monzo is equal to the previous one.
 const syntonicComma2 = Monzo.parse('-4,4,-1');
 
-
+// returns some values
 console.log(getCents(marvelComma)); // 7.711522991318361
-console.log(getRatio(marvelComma)); // [ 225n, 224n ]
+console.log(getRatio(marvelComma)); // [225n, 224n]
 console.log(getTenneyHeight(marvelComma)); // 15.62113611327464
 
+```
+
+### Val
+
+```ts
+const sampleVal = Val.create([
+    [2, 12],
+    [3, 19],
+    [2, 28],
+]);
 ```
 
