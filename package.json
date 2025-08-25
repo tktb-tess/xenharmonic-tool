@@ -5,37 +5,37 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tktb-tess/xenharmonic-tool.git"
-  },
   "author": "Tessyrrhaqt",
+  "license": "MIT",
   "type": "module",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "keywords": [
     "xenharmonic",
     "microtonal"
   ],
-  "main": "./dist/main.umd.cjs",
-  "module": "./dist/main.js",
-  "types": "./dist/main.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tktb-tess/xenharmonic-tool.git"
+  },
+  "main": "./dist/bundle.umd.cjs",
+  "module": "./dist/bundle.js",
+  "types": "./dist/bundle.d.ts",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/main.js",
-    "require": "./dist/main.umd.cjs"
+    "types": "./dist/bundle.d.ts",
+    "import": "./dist/bundle.js",
+    "require": "./dist/bundle.umd.cjs"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "update": "npx ncu -u && npm i",
+    "update": "ncu -u && npm i",
     "test": "vitest run"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
-    "@tktb-tess/util-fns": "^0.2.2",
+    "@tktb-tess/util-fns": "^0.3.0",
     "@types/node": "^24.3.0",
     "eslint": "^9.34.0",
     "globals": "^16.3.0",

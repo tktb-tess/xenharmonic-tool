@@ -1,4 +1,4 @@
-import { getPUnder20bits } from './util';
+import { getPrimesLte } from './util';
 const __mnz_brand: unique symbol = Symbol();
 
 type Monzo = (readonly [number, number])[] & {
@@ -41,16 +41,23 @@ const create = (arr: [number, number][]) => {
   ])[] as Monzo;
 };
 
-const parse = async (str: string) => {
+const decideLength = (i: number) => {
+  if (i === 0) return 0;
+  if (i < 4) {
+    return i + 2;
+  }
+  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
+};
+
+const parse = (str: string) => {
   if (!str.match(/^(\d+:)?-?\d+(,(\d+:)?-?\d+)*$/g)) {
     throw Error('could not parse');
   }
   const units = str.split(',');
-
-  const tasks = units.map(async (s, i): Promise<[number, number]> => {
+  const pList = getPrimesLte(decideLength(units.length));
+  const arr = units.map((s, i): [number, number] => {
     if (s.match(/^-?\d+$/g)) {
-      const b = await getPUnder20bits(i);
-      return [b, Number(s)];
+      return [pList[i], Number(s)];
     } else if (s.match(/^\d+:-?\d+$/g)) {
       const [b, e] = s.split(':');
       return [Number(b), Number(e)];
@@ -58,7 +65,7 @@ const parse = async (str: string) => {
       throw Error('could not parse');
     }
   });
-  return create(await Promise.all(tasks));
+  return create(arr);
 };
 
 // const fromRatio = (num: bigint, denom: bigint) => {};
