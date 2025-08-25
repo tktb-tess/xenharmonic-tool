@@ -1,4 +1,4 @@
-import { it, expect } from 'vitest';
+import { it, expect, describe } from 'vitest';
 import {
   getCents,
   getRatio,
@@ -62,18 +62,30 @@ it('check tempering out Edos', () => {
   });
 });
 
-it('detecting tempering out correctly', () => {
-  const val12 = Val.patentValOf(12, 5);
-  const val19 = Val.patentValOf(19, 5);
-  const val31 = Val.patentValOf(31, 5);
-  const val43 = Val.patentValOf(43, 5);
+describe('detecting tempering out correctly', () => {
+  const val22 = Val.patentValOf(22, 7);
+  const val31 = Val.patentValOf(31, 7);
   const syntonicComma = Monzo.parse('-4,4,-1');
-  console.log('val12:', val12);
-  console.log('val19:', val19);
+  const archytasComma = Monzo.parse('2:6,3:-2,7:-1');
+  const marvelComma = Monzo.parse('-5,2,2,-1');
+  console.log('val22:', val22);
   console.log('val31:', val31);
-  console.log('val43:', val43);
 
-  expect([val12, val19, val31, val43]).toSatisfy((vals: Val[]) =>
-    vals.every((v) => isTemperedOut(syntonicComma, v))
-  );
+  it('marvel comma', () => {
+    expect(marvelComma).toSatisfy((comma: Monzo) =>
+      [val22, val31].every((val) => isTemperedOut(comma, val))
+    );
+  });
+
+  it("Archytas' comma", () => {
+    expect(archytasComma).toSatisfy((comma: Monzo) =>
+      isTemperedOut(comma, val22)
+    );
+  });
+
+  it('syntonic comma', () => {
+    expect(syntonicComma).toSatisfy((comma: Monzo) =>
+      isTemperedOut(comma, val31)
+    );
+  });
 });
