@@ -1,6 +1,6 @@
 {
   "name": "@tktb-tess/xenharmonic-tool",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Functions and data in Xenharmonic theory",
   "publishConfig": {
     "access": "public"
