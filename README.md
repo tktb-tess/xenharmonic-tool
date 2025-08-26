@@ -7,6 +7,10 @@ Available in both browser and Node.js environments.
 
 ## Usage
 
+```bash
+npm i @tktb-tess/xenharmonic-tool
+```
+
 ### Monzo
 
 ```ts

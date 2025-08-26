@@ -52,13 +52,26 @@ it('managing empty array correctly', () => {
   expect(getCents(unison)).toBe(0);
 });
 
-it('check tempering out Edos', () => {
-  const mercatorComma = Monzo.parse('-84,53');
-  const temperingOutEdos = getTemperOutEdos(1000, mercatorComma);
+describe('check tempering out Edos', () => {
+  it('1', () => {
+    const mercatorComma = Monzo.parse('-84,53');
+    const temperingOutEdos = getTemperOutEdos(1000, mercatorComma);
 
-  console.log('temperingOutEdos:', temperingOutEdos);
-  expect(temperingOutEdos).toSatisfy((edos: number[]) => {
-    return edos.every((edo) => edo % 53 === 0);
+    console.log('temperingOutEdos:', temperingOutEdos);
+    expect(temperingOutEdos).toSatisfy((edos: number[]) => {
+      return edos.every((edo) => edo % 53 === 0);
+    });
+  });
+
+  it('2', () => {
+    const ragisma = Monzo.parse('-1,-7,4,1');
+    const breedsma = Monzo.parse('-5,-1,-2,4');
+    const temperingOutEdos = getTemperOutEdos(10000, ragisma, breedsma);
+
+    console.log('temperingOutEdos:', temperingOutEdos);
+    expect(temperingOutEdos).toSatisfy((edos: number[]) => {
+      return edos.every((edo) => edo % 9 === 0);
+    });
   });
 });
 
@@ -70,7 +83,6 @@ describe('detecting tempering out correctly', () => {
   const marvelComma = Monzo.parse('-5,2,2,-1');
   console.log('val22:', val22);
   console.log('val31:', val31);
-
 
   it('marvel comma', () => {
     expect(marvelComma).toSatisfy((comma: Monzo) =>
