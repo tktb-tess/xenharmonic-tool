@@ -14,4 +14,11 @@ export default defineConfig([
   {
     ignores: ['dist/**/*.{js,mjs,cjs,ts,mts,cts}'],
   },
+  {
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname
+      }
+    }
+  }
 ]);

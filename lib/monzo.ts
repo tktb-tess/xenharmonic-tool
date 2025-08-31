@@ -1,9 +1,9 @@
 import { getPrimesLte } from './util';
-const __mnz_brand: unique symbol = Symbol();
+import XenBrand from './brand';
 
-type Monzo = (readonly [number, number])[] & {
-  [__mnz_brand]: unknown;
-};
+export declare const mnzBrand: unique symbol;
+
+type Monzo = (readonly [number, number])[] & XenBrand<typeof mnzBrand>;
 
 /**
  * changes monzo into string form \

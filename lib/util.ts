@@ -1,5 +1,5 @@
-import type Monzo from './monzo';
-import type Val from './val';
+import Monzo from './monzo';
+import Val from './val';
 import { bailliePSW } from '@tktb-tess/util-fns';
 
 /**
@@ -116,6 +116,52 @@ const isTemperedOut = (mnz: Monzo, val: Val) => {
   return braket === 0;
 };
 
+/**
+ * determines whether one monzo is equal to another
+ * @param monzo1 
+ * @param monzo2 
+ * @returns 
+ */
+const isEqualMonzo = (monzo1: Monzo, monzo2: Monzo) => {
+  return Monzo.stringify(monzo1) === Monzo.stringify(monzo2);
+};
+
+/**
+ * determines whether one val is equal to another
+ * @param val1 
+ * @param val2
+ * @returns 
+ */
+const isEqualVal = (val1: Val, val2: Val) => {
+  return Val.stringify(val1) === Val.stringify(val2);
+};
+
+const isEqualBasis = (one: number[], another: number[]) => {
+  if (one.length !== another.length) return false;
+  const { length } = one;
+  for (let i = 0; i < length; i++) {
+    if (one[i] !== another[i]) return false;
+  }
+  return true;
+};
+
+/**
+ * returns array of period-seperated basis (or null) and monzo vector
+ * @param monzo
+ * @returns `[period-separated basis string (if the same as normal basis, will be null), monzo vector string]`
+ */
+const getMonzoVector = (monzo: Monzo): [string | null, string] => {
+  const bases = monzo.map(([b]) => b);
+  const values = monzo.map(([, v]) => v);
+
+  const pList = getPrimesLte(bases.length).slice(0, bases.length);
+
+  const vStr = values.length > 0 ? values.join('\x20') : '0';
+  return isEqualBasis(bases, pList)
+    ? [null, `[${vStr}\u27e9`]
+    : [`${bases.join('.')}`, `[${vStr}\u27e9`];
+};
+
 export {
   getCents,
   getRatio,
@@ -125,4 +171,7 @@ export {
   getPrimesLte,
   getTemperOutEdos,
   isTemperedOut,
+  isEqualMonzo,
+  isEqualVal,
+  getMonzoVector,
 };

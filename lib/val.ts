@@ -1,10 +1,9 @@
 import { getPrimesLte } from './util';
+import XenBrand from './brand';
 
-const __val_brand: unique symbol = Symbol();
+export declare const valBrand: unique symbol;
 
-type Val = (readonly [number, number])[] & {
-  [__val_brand]: unknown;
-};
+type Val = (readonly [number, number])[] & XenBrand<typeof valBrand>;
 
 /**
  * changes val into string form \
@@ -15,6 +14,11 @@ type Val = (readonly [number, number])[] & {
 const stringify = (val: Val) =>
   val.map(([basis, exp]) => `${basis};${exp}`).join(',');
 
+/**
+ * creating val
+ * @param arr 
+ * @returns 
+ */
 const create = (arr: [number, number][]) => {
   arr.forEach(([basis, exp]) => {
     if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
@@ -40,6 +44,11 @@ const create = (arr: [number, number][]) => {
   ])[] as Val;
 };
 
+/**
+ * 最適な上限を返す
+ * @param i 
+ * @returns 
+ */
 const decideLength = (i: number) => {
   if (i === 0) return 0;
   if (i < 4) {
@@ -48,6 +57,11 @@ const decideLength = (i: number) => {
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
 
+/**
+ * parsing string into val
+ * @param str 
+ * @returns 
+ */
 const parse = (str: string) => {
   if (!str.match(/^(\d+;)?-?\d+(,(\d+;)?-?\d+)*$/g)) {
     throw Error('could not parse');
