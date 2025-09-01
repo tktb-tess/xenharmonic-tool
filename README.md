@@ -62,7 +62,7 @@ const sampleVal2 = Val.parse('2;19,3;30,5;44,7;53');
 const sampleVal2 = Val.parse('19,30,44,53');
 
 // creates 13-limit patent val for 22EDO
-const patentValFor22Edo = Val.patentValOf(22, 13);
+const patentValFor22Edo = Val.patentValFor(22, 13);
 
 console.log(Monzo.stringify(patentValFor22Edo)): // 2;22,3;35,5;51,7;62,11;76,13;81
 
