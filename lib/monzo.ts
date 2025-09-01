@@ -6,12 +6,6 @@ type Monzo = (readonly [number, number])[] & {
   readonly [mnzBrand]: typeof mnzBrand;
 };
 
-/**
- * changes monzo into string form \
- * e.g. `[[2, -4], [3, 4], [5, -1]]` (syntonic comma) -> `2:-4,3:4,5:-1`
- * @param mnz
- * @returns
- */
 const stringify = (mnz: Monzo) =>
   mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
 
@@ -42,8 +36,6 @@ const create = (arr: [number, number][]) => {
   ])[] as Monzo;
 };
 
-
-
 const parse = (str: string) => {
   if (!str.match(/^(\d+:)?-?\d+(,(\d+:)?-?\d+)*$/g)) {
     throw Error('could not parse');
@@ -63,12 +55,6 @@ const parse = (str: string) => {
   return create(arr);
 };
 
-/**
- * determines whether one monzo is equal to another
- * @param monzo1 
- * @param monzo2 
- * @returns 
- */
 const isEqual = (monzo1: Monzo, monzo2: Monzo) => {
   return Monzo.stringify(monzo1) === Monzo.stringify(monzo2);
 };
@@ -76,9 +62,34 @@ const isEqual = (monzo1: Monzo, monzo2: Monzo) => {
 // const fromRatio = (num: bigint, denom: bigint) => {};
 
 const Monzo = {
+  /**
+   * changes monzo into string form \
+   * e.g. `[[2, -4], [3, 4], [5, -1]]` (syntonic comma) -> `2:-4,3:4,5:-1`
+   * @param mnz
+   * @returns
+   */
   stringify,
+  /**
+   * creates monzo from array of `[basis, exponent]`
+   * @param arr
+   * @returns
+   */
   create,
+  /**
+   * parsing string into val
+   * @param str
+   * @returns
+   */
   parse,
+  /**
+   * determines whether one monzo is equal to another
+   * @param monzo1
+   * @param monzo2
+   * @example
+   * const mnz1 = Monzo.create([[2, -4], [3, 4], [5, -1]]);
+   * const mnz2 = Monzo.parse('-4,4,-1');
+   * Monzo.isEqual(mnz1, mnz2); // true
+   */
   isEqual,
 };
 
