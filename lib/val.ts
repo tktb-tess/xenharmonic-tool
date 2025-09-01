@@ -6,20 +6,9 @@ type Val = (readonly [number, number])[] & {
   readonly [valBrand]: typeof valBrand;
 };
 
-/**
- * changes val into string form \
- * e.g. `[[2, 12], [3, 19], [5, 28]]` (12edo) -> `2;12,3;19,5;28`
- * @param val
- * @returns
- */
 const stringify = (val: Val) =>
   val.map(([basis, exp]) => `${basis};${exp}`).join(',');
 
-/**
- * creating val
- * @param arr
- * @returns
- */
 const create = (arr: [number, number][]) => {
   arr.forEach(([basis, exp]) => {
     if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
@@ -45,11 +34,6 @@ const create = (arr: [number, number][]) => {
   ])[] as Val;
 };
 
-/**
- * parsing string into val
- * @param str
- * @returns
- */
 const parse = (str: string) => {
   if (!str.match(/^(\d+;)?-?\d+(,(\d+;)?-?\d+)*$/g)) {
     throw Error('could not parse');
@@ -83,21 +67,43 @@ const patentValFor = (edo: number, limit: number) => {
   return create(arr);
 };
 
-/**
- * determines whether one val is equal to another
- * @param val1
- * @param val2
- * @returns
- */
 const isEqual = (val1: Val, val2: Val) => {
   return Val.stringify(val1) === Val.stringify(val2);
 };
 
 const Val = {
+  /**
+   * changes val into string form \
+   * e.g. `[[2, 12], [3, 19], [5, 28]]` (patent val for 12EDO) -> `2;12,3;19,5;28`
+   * @param val
+   * @returns
+   */
   stringify,
+  /**
+   * creates val
+   * @param arr
+   * @returns
+   */
   create,
+  /**
+   * parsing string into val
+   * @param str
+   * @returns
+   */
   parse,
+  /**
+   * returns patent val for input edo up to limit
+   * @param edo
+   * @param limit prime limit
+   * @returns
+   */
   patentValFor,
+  /**
+   * determines whether one val is equal to another
+   * @param val1
+   * @param val2
+   * @returns
+   */
   isEqual,
 };
 
