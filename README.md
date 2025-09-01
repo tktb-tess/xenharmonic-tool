@@ -69,7 +69,7 @@ console.log(Monzo.stringify(patentValFor22Edo)): // 2;22,3;35,5;51,7;62,11;76,13
 const marvelComma = Monzo.parse('-5,2,2,-1');
 
 // whether or not the val tempers out the monzo
-console.log(isTemperedOut(marvelComma, patentValFor22Edo)); // true
+console.log(isTemperedOut(patentValFor22Edo, marvelComma)); // true
 
 ```
 

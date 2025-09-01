@@ -104,8 +104,17 @@ const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
  * @param mnz monzo
  * @param val val
  */
-const isTemperedOut = (mnz: Monzo, val: Val) => {
-  const braket = mnz
+const isTemperedOut = (val: Val, mnz: Monzo) => {
+  return braket(val, mnz) === 0;
+};
+
+/**
+ * returns braket of val and monzo
+ * @param mnz monzo
+ * @param val val
+ */
+const braket = (val: Val, mnz: Monzo) => {
+  return mnz
     .map(([basis, exp]) => {
       const m = val.find(([b]) => basis === b);
       if (!m) throw Error('cannot be found corresponding val basis');
@@ -113,7 +122,6 @@ const isTemperedOut = (mnz: Monzo, val: Val) => {
       return exp * vExp;
     })
     .reduce((prev, cur) => prev + cur, 0);
-  return braket === 0;
 };
 
 const isEqualBasis = (one: number[], another: number[]) => {
@@ -163,6 +171,7 @@ export {
   getVenedettiHeight,
   getPrimesLte,
   getTemperOutEdos,
+  braket,
   isTemperedOut,
   getMonzoVector,
   decideLength,

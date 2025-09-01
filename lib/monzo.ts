@@ -9,28 +9,29 @@ type Monzo = (readonly [number, number])[] & {
 const stringify = (mnz: Monzo) =>
   mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
 
-const create = (arr: [number, number][]) => {
-  arr.forEach(([basis, exp]) => {
+const create = (array: (readonly [number, number])[]) => {
+  const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
+  arr_.forEach(([basis, exp]) => {
     if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
       throw Error('invalid array');
     }
   });
 
   // 基底の小さい順にソート
-  arr.sort(([a], [b]) => {
+  arr_.sort(([a], [b]) => {
     return a - b;
   });
 
   // 重複する基底を全部足し合わせる
   // その後前の方を0にする
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i][0] === arr[i + 1][0]) {
-      arr[i + 1][1] += arr[i][1];
-      arr[i][1] = 0;
+  for (let i = 0; i < arr_.length - 1; i++) {
+    if (arr_[i][0] === arr_[i + 1][0]) {
+      arr_[i + 1][1] += arr_[i][1];
+      arr_[i][1] = 0;
     }
   }
 
-  return arr.filter(([, exp]) => exp !== 0) as (readonly [
+  return arr_.filter(([, exp]) => exp !== 0) as (readonly [
     number,
     number
   ])[] as Monzo;
@@ -59,26 +60,61 @@ const isEqual = (monzo1: Monzo, monzo2: Monzo) => {
   return Monzo.stringify(monzo1) === Monzo.stringify(monzo2);
 };
 
+const toArray = (monzo: Monzo): [number, number][] => {
+  return monzo.map(([a, b]) => [a, b]);
+};
+
+const getBases = (left: Monzo, right: Monzo) => {
+  const bases_ = left.map(([b]) => b).concat(right.map(([b]) => b));
+  return [...new Set(bases_)].sort((a, b) => a - b);
+};
+
+const add = (left: Monzo, right: Monzo) => {
+  const bases = getBases(left, right);
+  const results: [number, number][] = bases.map((basis) => {
+    const exp1 = left.find(([b]) => b === basis)?.at(1) ?? 0;
+    const exp2 = right.find(([b]) => b === basis)?.at(1) ?? 0;
+    return [basis, exp1 + exp2];
+  });
+
+  return Monzo.create(results);
+};
+
+const subtract = (left: Monzo, right: Monzo) => {
+  const bases = getBases(left, right);
+  const results: [number, number][] = bases.map((basis) => {
+    const exp1 = left.find(([b]) => b === basis)?.at(1) ?? 0;
+    const exp2 = right.find(([b]) => b === basis)?.at(1) ?? 0;
+    return [basis, exp1 - exp2];
+  });
+
+  return Monzo.create(results);
+};
+
 // const fromRatio = (num: bigint, denom: bigint) => {};
 
 const Monzo = {
   /**
-   * changes monzo into string form \
-   * e.g. `[[2, -4], [3, 4], [5, -1]]` (syntonic comma) -> `2:-4,3:4,5:-1`
+   * changes monzo into string form
+   * 
    * @param mnz
-   * @returns
+   * @example
+   * const mnz1 = Monzo.create([[2, -4], [3, 4], [5, -1]]);
+   * console.log(Monzo.stringify(mnz1)); // '2:-4,3:4,5:-1'
    */
   stringify,
   /**
-   * creates monzo from array of `[basis, exponent]`
+   * creates monzo from an array of `[basis, exponent]`
    * @param arr
    * @returns
    */
   create,
   /**
-   * parsing string into val
+   * parses string into a monzo
    * @param str
-   * @returns
+   * @example
+   * const monzo = Monzo.parse('-4,4,-1');
+   * console.log(monzo); // [[2, -4], [3, 4], [5, -1]]
    */
   parse,
   /**
@@ -91,6 +127,18 @@ const Monzo = {
    * Monzo.isEqual(mnz1, mnz2); // true
    */
   isEqual,
+  /**
+   * converts into an array of `[basis, exponent]`
+   */
+  toArray,
+  /**
+   * returns `left + right`
+   */
+  add,
+  /**
+   * returns `left - right`
+   */
+  subtract,
 };
 
 export default Monzo;

@@ -79,16 +79,16 @@ describe('detecting tempering out correctly', () => {
   // console.log('val31:', val31);
 
   it('marvel comma', () => {
-    expect([val22, val31].every((val) => isTemperedOut(marvelComma, val))).toBe(
+    expect([val22, val31].every((val) => isTemperedOut(val, marvelComma))).toBe(
       true
     );
   });
 
   it("Archytas' comma", () => {
-    expect(isTemperedOut(archytasComma, val22)).toBe(true);
+    expect(isTemperedOut(val22, archytasComma)).toBe(true);
   });
 
   it('syntonic comma', () => {
-    expect(isTemperedOut(syntonicComma, val31)).toBe(true);
+    expect(isTemperedOut(val31, syntonicComma)).toBe(true);
   });
 });
