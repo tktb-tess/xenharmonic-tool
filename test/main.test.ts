@@ -8,6 +8,34 @@ import {
   isTemperedOut,
 } from '../dist/bundle';
 
+type CommaType =
+  | {
+      readonly commaType: 'rational';
+      readonly monzo: (readonly [number, number])[];
+    }
+  | {
+      readonly commaType: 'irrational';
+      readonly ratio: string;
+      readonly cents: number;
+    };
+
+type CommaData = CommaType & {
+  readonly id: string;
+  readonly name: string[];
+  readonly colorName: readonly [string, string];
+  readonly namedBy?: string;
+};
+
+type CommaMetadata = {
+  readonly lastUpdate: string;
+  readonly numberOf: number;
+};
+
+type Commas = {
+  readonly metadata: CommaMetadata;
+  readonly commas: CommaData[];
+};
+
 it('generating patent val correctly', () => {
   const val31edo = Val.patentValFor(31, 19);
   const check = Val.parse('31,49,72,87,107,115,127,132');
@@ -91,4 +119,24 @@ describe('detecting tempering out correctly', () => {
   it('syntonic comma', () => {
     expect(isTemperedOut(val31, syntonicComma)).toBe(true);
   });
+});
+
+it('parse comma list', async () => {
+  const url = 'https://tktb-tess.github.io/commas/out/commas.json';
+  const { commas }: Commas = await fetch(url).then((r) => r.json());
+  const result: Monzo[] = [];
+  commas.map((comma) => {
+    switch (comma.commaType) {
+      case 'rational': {
+        result.push(Monzo.create(comma.monzo));
+        break;
+      }
+      case 'irrational': {
+        
+        break;
+      }
+    }
+  });
+  // console.log(result.map((mnz) => Monzo.stringify(mnz)).join('\n'));
+  expect(0).toBe(0);
 });
