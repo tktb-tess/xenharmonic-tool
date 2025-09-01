@@ -116,26 +116,6 @@ const isTemperedOut = (mnz: Monzo, val: Val) => {
   return braket === 0;
 };
 
-/**
- * determines whether one monzo is equal to another
- * @param monzo1 
- * @param monzo2 
- * @returns 
- */
-const isEqualMonzo = (monzo1: Monzo, monzo2: Monzo) => {
-  return Monzo.stringify(monzo1) === Monzo.stringify(monzo2);
-};
-
-/**
- * determines whether one val is equal to another
- * @param val1 
- * @param val2
- * @returns 
- */
-const isEqualVal = (val1: Val, val2: Val) => {
-  return Val.stringify(val1) === Val.stringify(val2);
-};
-
 const isEqualBasis = (one: number[], another: number[]) => {
   if (one.length !== another.length) return false;
   const { length } = one;
@@ -154,12 +134,25 @@ const getMonzoVector = (monzo: Monzo): [string | null, string] => {
   const bases = monzo.map(([b]) => b);
   const values = monzo.map(([, v]) => v);
 
-  const pList = getPrimesLte(bases.length).slice(0, bases.length);
+  const pList = getPrimesLte(decideLength(bases.length)).slice(0, bases.length);
 
   const vStr = values.length > 0 ? values.join('\x20') : '0';
   return isEqualBasis(bases, pList)
     ? [null, `[${vStr}\u27e9`]
     : [`${bases.join('.')}`, `[${vStr}\u27e9`];
+};
+
+/**
+ * p_n <= n * (ln n + ln(ln n)) (n >= 4)
+ * @param i
+ * @returns
+ */
+const decideLength = (i: number) => {
+  if (i === 0) return 0;
+  if (i < 4) {
+    return i + 2;
+  }
+  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
 
 export {
@@ -171,7 +164,6 @@ export {
   getPrimesLte,
   getTemperOutEdos,
   isTemperedOut,
-  isEqualMonzo,
-  isEqualVal,
   getMonzoVector,
+  decideLength,
 };

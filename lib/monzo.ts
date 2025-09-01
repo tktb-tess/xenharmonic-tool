@@ -1,9 +1,10 @@
-import { getPrimesLte } from './util';
-import XenBrand from './brand';
+import { getPrimesLte, decideLength } from './util';
 
-export declare const mnzBrand: unique symbol;
+declare const mnzBrand: unique symbol;
 
-type Monzo = (readonly [number, number])[] & XenBrand<typeof mnzBrand>;
+type Monzo = (readonly [number, number])[] & {
+  readonly [mnzBrand]: typeof mnzBrand;
+};
 
 /**
  * changes monzo into string form \
@@ -41,24 +42,18 @@ const create = (arr: [number, number][]) => {
   ])[] as Monzo;
 };
 
-const decideLength = (i: number) => {
-  if (i === 0) return 0;
-  if (i < 4) {
-    return i + 2;
-  }
-  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
-};
+
 
 const parse = (str: string) => {
   if (!str.match(/^(\d+:)?-?\d+(,(\d+:)?-?\d+)*$/g)) {
     throw Error('could not parse');
   }
   const units = str.split(',');
-  const pList = getPrimesLte(decideLength(units.length));
+  const pList = getPrimesLte(decideLength(units.length)).slice(0, units.length);
   const arr = units.map((s, i): [number, number] => {
-    if (s.match(/^-?\d+$/g)) {
+    if (s.match(/^-?\d+$/)) {
       return [pList[i], Number(s)];
-    } else if (s.match(/^\d+:-?\d+$/g)) {
+    } else if (s.match(/^\d+:-?\d+$/)) {
       const [b, e] = s.split(':');
       return [Number(b), Number(e)];
     } else {
@@ -68,12 +63,23 @@ const parse = (str: string) => {
   return create(arr);
 };
 
+/**
+ * determines whether one monzo is equal to another
+ * @param monzo1 
+ * @param monzo2 
+ * @returns 
+ */
+const isEqual = (monzo1: Monzo, monzo2: Monzo) => {
+  return Monzo.stringify(monzo1) === Monzo.stringify(monzo2);
+};
+
 // const fromRatio = (num: bigint, denom: bigint) => {};
 
 const Monzo = {
   stringify,
   create,
   parse,
+  isEqual,
 };
 
 export default Monzo;

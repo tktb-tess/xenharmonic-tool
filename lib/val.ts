@@ -1,9 +1,10 @@
-import { getPrimesLte } from './util';
-import XenBrand from './brand';
+import { getPrimesLte, decideLength } from './util';
 
-export declare const valBrand: unique symbol;
+declare const valBrand: unique symbol;
 
-type Val = (readonly [number, number])[] & XenBrand<typeof valBrand>;
+type Val = (readonly [number, number])[] & {
+  readonly [valBrand]: typeof valBrand;
+};
 
 /**
  * changes val into string form \
@@ -16,8 +17,8 @@ const stringify = (val: Val) =>
 
 /**
  * creating val
- * @param arr 
- * @returns 
+ * @param arr
+ * @returns
  */
 const create = (arr: [number, number][]) => {
   arr.forEach(([basis, exp]) => {
@@ -45,22 +46,9 @@ const create = (arr: [number, number][]) => {
 };
 
 /**
- * 最適な上限を返す
- * @param i 
- * @returns 
- */
-const decideLength = (i: number) => {
-  if (i === 0) return 0;
-  if (i < 4) {
-    return i + 2;
-  }
-  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
-};
-
-/**
  * parsing string into val
- * @param str 
- * @returns 
+ * @param str
+ * @returns
  */
 const parse = (str: string) => {
   if (!str.match(/^(\d+;)?-?\d+(,(\d+;)?-?\d+)*$/g)) {
@@ -95,11 +83,22 @@ const patentValOf = (edo: number, limit: number) => {
   return create(arr);
 };
 
+/**
+ * determines whether one val is equal to another
+ * @param val1
+ * @param val2
+ * @returns
+ */
+const isEqual = (val1: Val, val2: Val) => {
+  return Val.stringify(val1) === Val.stringify(val2);
+};
+
 const Val = {
   stringify,
   create,
   parse,
   patentValOf,
+  isEqual,
 };
 
 export default Val;

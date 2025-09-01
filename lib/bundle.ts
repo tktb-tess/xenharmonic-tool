@@ -9,4 +9,5 @@ export {
   getPrimesLte,
   getTemperOutEdos,
   isTemperedOut,
+  getMonzoVector,
 } from './util';
