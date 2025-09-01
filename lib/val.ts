@@ -69,7 +69,7 @@ const parse = (str: string) => {
   return create(arr);
 };
 
-const patentValOf = (edo: number, limit: number) => {
+const patentValFor = (edo: number, limit: number) => {
   if (edo < 1) throw Error('`edo` must be positive');
   if (limit < 2) throw Error('`limit` must be 2 or larger');
 
@@ -97,7 +97,7 @@ const Val = {
   stringify,
   create,
   parse,
-  patentValOf,
+  patentValFor,
   isEqual,
 };
 

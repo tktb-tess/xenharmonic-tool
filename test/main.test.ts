@@ -9,7 +9,7 @@ import {
 } from '../dist/bundle';
 
 it('generating patent val correctly', () => {
-  const val31edo = Val.patentValOf(31, 19);
+  const val31edo = Val.patentValFor(31, 19);
   const check = Val.parse('31,49,72,87,107,115,127,132');
 
   // console.log('val31edo:', Val.stringify(val31edo));
@@ -70,8 +70,8 @@ describe('check tempering out Edos', () => {
 });
 
 describe('detecting tempering out correctly', () => {
-  const val22 = Val.patentValOf(22, 13);
-  const val31 = Val.patentValOf(31, 7);
+  const val22 = Val.patentValFor(22, 13);
+  const val31 = Val.patentValFor(31, 7);
   const syntonicComma = Monzo.parse('-4,4,-1');
   const archytasComma = Monzo.parse('6,-2,7:-1');
   const marvelComma = Monzo.parse('-5,2,2,-1');

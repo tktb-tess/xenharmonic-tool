@@ -17,6 +17,8 @@
       return Error('invalid input');
     }
   });
+  const marvelComma = Monzo.parse('-5,2,2,-1');
+  const syntonicComma = Monzo.parse('-4,4,-1');
 </script>
 
 <label for="mnz">Monzo</label>
@@ -35,6 +37,8 @@ Tempering out EDOs up to 1000:
 {getTemperOutEdos(1000, monzo).join(', ')}
 </pre>
 {/if}
+
+<p>{getTemperOutEdos(100, marvelComma, syntonicComma)}</p>
 
 <style>
   pre {

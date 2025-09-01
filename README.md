@@ -39,7 +39,7 @@ console.log(getTenneyHeight(marvelComma)); // 15.62113611327464
 console.log(Monzo.stringify(marvelComma)): // 2:-5,3:2,5:2,7:-1
 
 // gets an array of EDOs whose patent val tempers out the monzos
-console.log(getTemperOutEdos(100, marvelComma, syntonicComma));
+console.log(getTemperOutEdos(100, marvelComma, syntonicComma)); // [12, 19, 31, 43, 50, 62, 74, 81, 93]
 
 ```
 
