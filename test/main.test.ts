@@ -6,7 +6,7 @@ import {
   Val,
   getTemperOutEdos,
   isTemperedOut,
-} from '../dist/bundle';
+} from '@tktb-tess/xenharmonic-tool';
 
 type CommaType =
   | {
@@ -124,19 +124,15 @@ describe('detecting tempering out correctly', () => {
 it('parse comma list', async () => {
   const url = 'https://tktb-tess.github.io/commas/out/commas.json';
   const { commas }: Commas = await fetch(url).then((r) => r.json());
-  const result: Monzo[] = [];
-  commas.map((comma) => {
-    switch (comma.commaType) {
-      case 'rational': {
-        result.push(Monzo.create(comma.monzo));
-        break;
-      }
-      case 'irrational': {
-        
-        break;
-      }
+  const result: [string, Monzo][] = [];
+
+  commas.forEach((comma) => {
+    if (comma.commaType === 'rational') {
+      result.push([comma.name[0], Monzo.create(comma.monzo)]);
     }
   });
-  // console.log(result.map((mnz) => Monzo.stringify(mnz)).join('\n'));
+
+  console.log(result.map(([name, mnz]) => `${name} ${Monzo.stringify(mnz)}`).join('\n'));
+  
   expect(0).toBe(0);
 });

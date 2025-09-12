@@ -1,12 +1,9 @@
-import { mount } from 'svelte';
-import App from './app.svelte';
+import './main.css';
 
 const elem = (() => {
   const app_ = document.getElementById('app');
-  if (!app_) throw Error('cannot get Element');
+  if (!(app_ instanceof HTMLDivElement)) throw Error('cannot get Element');
   return app_;
 })();
 
-const app = mount(App, { target: elem });
-
-export default app;
+elem.textContent = 'Güddenn däģ!';

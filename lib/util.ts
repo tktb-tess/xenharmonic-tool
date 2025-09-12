@@ -1,5 +1,5 @@
-import Monzo from './monzo';
-import Val from './val';
+import { Monzo } from './monzo';
+import { Val } from './val';
 import { bailliePSW } from '@tktb-tess/util-fns';
 
 /**
@@ -91,10 +91,10 @@ const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
     .map((_, i) => i + 1)
     .filter((edo) => {
       return monzos.every((mnz) => {
-        const inner = mnz
+        const braket = mnz
           .map(([b, e]) => Math.round(edo * Math.log2(b)) * e)
           .reduce((prev, cur) => prev + cur, 0);
-        return inner === 0;
+        return braket === 0;
       });
     });
 };

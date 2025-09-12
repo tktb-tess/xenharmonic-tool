@@ -1,9 +1,9 @@
 import { getPrimesLte, decideLength } from './util';
 
-declare const mnzBrand: unique symbol;
+const mnz_brand = Symbol('mnz-brand');
 
 type Monzo = (readonly [number, number])[] & {
-  readonly [mnzBrand]: typeof mnzBrand;
+  readonly [mnz_brand]: typeof mnz_brand;
 };
 
 const stringify = (mnz: Monzo) =>
@@ -96,7 +96,7 @@ const subtract = (left: Monzo, right: Monzo) => {
 const Monzo = {
   /**
    * changes monzo into string form
-   * 
+   *
    * @param mnz
    * @example
    * const mnz1 = Monzo.create([[2, -4], [3, 4], [5, -1]]);
@@ -141,4 +141,4 @@ const Monzo = {
   subtract,
 };
 
-export default Monzo;
+export { Monzo };

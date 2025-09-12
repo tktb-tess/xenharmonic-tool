@@ -1,9 +1,9 @@
 import { getPrimesLte, decideLength } from './util';
 
-declare const valBrand: unique symbol;
+const val_brand = Symbol('val-brand');
 
 type Val = (readonly [number, number])[] & {
-  readonly [valBrand]: typeof valBrand;
+  readonly [val_brand]: typeof val_brand;
 };
 
 const stringify = (val: Val) =>
@@ -156,4 +156,4 @@ const Val = {
   subtract,
 };
 
-export default Val;
+export { Val };

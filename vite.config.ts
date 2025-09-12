@@ -2,17 +2,12 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 export default defineConfig({
-  plugins: [
-    dts({ tsconfigPath: resolve(__dirname, './tsconfig.lib.json') }),
-    svelte(),
-  ],
+  plugins: [dts()],
   build: {
     lib: {
-      entry: resolve(__dirname, './lib/bundle.ts'),
-      name: 'xenharmonic-tool',
+      entry: resolve(__dirname, './lib/main.ts'),
       fileName: 'bundle',
       formats: ['es'],
     },
