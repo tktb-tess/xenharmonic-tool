@@ -18,7 +18,7 @@ npm i @tktb-tess/xenharmonic-tool
 import { Monzo, getCents, getRatio, getTenneyHeight, getTemperOutEdos } from '@tktb-tess/xenharmonic-tool';
 
 // create from array of [basis, exponent]
-const marvelComma = Monzo.create([
+const marvelComma = new Monzo([
     [2, -5],
     [3, 2],
     [5, 2],
@@ -33,11 +33,11 @@ const syntonicComma = Monzo.parse('2:-4,3:4,5:-1');
 const syntonicComma2 = Monzo.parse('-4,4,-1');
 
 // gets some values
-console.log(getCents(marvelComma)); // 7.711522991318361
-console.log(getRatio(marvelComma)); // [225n, 224n]
-console.log(getTenneyHeight(marvelComma)); // 15.62113611327464
+console.log(marvelComma.getCents()); // 7.711522991318361
+console.log(marvelComma.getRatio()); // [225n, 224n]
+console.log(marvelComma.getTenneyHeight()); // 15.62113611327464
 
-console.log(Monzo.stringify(marvelComma)): // 2:-5,3:2,5:2,7:-1
+console.log(marvelComma.toString()): // 2:-5,3:2,5:2,7:-1
 
 // gets an array of EDOs whose patent val tempers out the monzos
 console.log(getTemperOutEdos(100, marvelComma, syntonicComma)); // [12, 19, 31, 43, 50, 62, 74, 81, 93]
@@ -50,7 +50,7 @@ console.log(getTemperOutEdos(100, marvelComma, syntonicComma)); // [12, 19, 31, 
 import { Val, Monzo, isTemperedOut } from '@tktb-tess/xenharmonic-tool';
 
 // create from array of [basis, exponent]
-const sampleVal = Val.create([
+const sampleVal = new Val([
     [2, 12],
     [3, 19],
     [2, 28],
@@ -65,7 +65,7 @@ const sampleVal2 = Val.parse('19,30,44,53');
 // creates 13-limit patent val for 22EDO
 const patentValFor22Edo = Val.patentValFor(22, 13);
 
-console.log(Monzo.stringify(patentValFor22Edo)): // 2;22,3;35,5;51,7;62,11;76,13;81
+console.log(patentValFor22Edo.toString()): // 2;22,3;35,5;51,7;62,11;76,13;81
 
 const marvelComma = Monzo.parse('-5,2,2,-1');
 
