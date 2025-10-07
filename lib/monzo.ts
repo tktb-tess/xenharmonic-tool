@@ -201,6 +201,10 @@ export class Monzo {
       ? [null, `[${vStr}\u27e9`]
       : [`${bases.join('.')}`, `[${vStr}\u27e9`];
   }
+
+  static isEqual(mnz1: Monzo, mnz2: Monzo) {
+    return mnz1.toString() === mnz2.toString();
+  }
 }
 
 const isEqualBasis = (one: number[], another: number[]) => {
