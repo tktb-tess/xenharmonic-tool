@@ -28,6 +28,10 @@ jobs:
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
 
+      # needed for OIDC
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install Dependencies
         run: pnpm i --frozen-lockfile
 
@@ -39,4 +43,3 @@ jobs:
 
       - name: Publish
         run: pnpm publish --no-git-checks --provenance --access public
-
