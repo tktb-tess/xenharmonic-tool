@@ -130,3 +130,18 @@ it('parse comma list', async () => {
   // console.log(sample);
   expect(sample).includes('[');
 });
+
+describe('stringify and parse', () => {
+  it('monzo', () => {
+    const mnz = Monzo.parse('-4,4,-1');
+    const mnz2 = Monzo.parse(mnz.toString());
+
+    expect(Monzo.isEqual(mnz, mnz2)).toBe(true);
+  });
+  it('val', () => {
+    const val = Val.patentValFor(29, 13);
+    const val2 = Val.parse(val.toString());
+
+    expect(Val.isEqual(val, val2)).toBe(true);
+  });
+});
