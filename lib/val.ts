@@ -7,7 +7,7 @@ export class Val {
 
   /**
    * create val from array
-   * @param array 
+   * @param array
    */
   constructor(array: (readonly [number, number])[]) {
     const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
@@ -34,8 +34,8 @@ export class Val {
 
   /**
    * parse string into val
-   * @param str 
-   * @returns 
+   * @param str
+   * @returns
    */
   static parse(str: string) {
     if (!str.match(/^(\d+;)?-?\d+(,(\d+;)?-?\d+)*$/g)) {
@@ -57,8 +57,8 @@ export class Val {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   toString() {
     return this.#val.map(([basis, exp]) => `${basis};${exp}`).join(',');
@@ -66,9 +66,9 @@ export class Val {
 
   /**
    * return patent val for given EDO and limit
-   * @param edo 
-   * @param limit 
-   * @returns 
+   * @param edo
+   * @param limit
+   * @returns
    */
   static patentValFor(edo: number, limit: number) {
     if (edo < 1) throw Error('`edo` must be positive');
@@ -86,9 +86,9 @@ export class Val {
 
   /**
    * whether two vals are the same
-   * @param val1 
-   * @param val2 
-   * @returns 
+   * @param val1
+   * @param val2
+   * @returns
    */
   static isEqual(val1: Val, val2: Val) {
     return val1.toString() === val2.toString();
@@ -101,7 +101,7 @@ export class Val {
 
   /**
    * return mutable array
-   * @returns 
+   * @returns
    */
   getArray(): [number, number][] {
     return this.#val.map(([a, b]) => [a, b]);
@@ -113,8 +113,8 @@ export class Val {
 
   /**
    * add two val
-   * @param other 
-   * @returns 
+   * @param other
+   * @returns
    */
   add(other: Val) {
     const bases = Val.#getBases(this, other);
@@ -129,8 +129,8 @@ export class Val {
 
   /**
    * subtract `other` from `this`
-   * @param other 
-   * @returns 
+   * @param other
+   * @returns
    */
   subtract(other: Val) {
     const bases = Val.#getBases(this, other);

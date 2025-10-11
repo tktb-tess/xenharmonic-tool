@@ -74,10 +74,4 @@ const decideLength = (i: number) => {
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
 
-export {
-  getPrimesLte,
-  getTemperOutEdos,
-  braket,
-  isTemperedOut,
-  decideLength,
-};
+export { getPrimesLte, getTemperOutEdos, braket, isTemperedOut, decideLength };
