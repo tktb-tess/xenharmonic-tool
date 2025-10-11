@@ -15,7 +15,7 @@ npm i @tktb-tess/xenharmonic-tool
 ### Monzo
 
 ```ts
-import { Monzo, getCents, getRatio, getTenneyHeight, getTemperOutEdos } from '@tktb-tess/xenharmonic-tool';
+import { Monzo, getTemperOutEdos } from '@tktb-tess/xenharmonic-tool';
 
 // create from array of [basis, exponent]
 const marvelComma = new Monzo([
