@@ -1,7 +1,7 @@
 import { getPrimesLte, decideLength } from './util';
 
 export class Val {
-  readonly #val: (readonly [number, number])[];
+  readonly #val: readonly (readonly [number, number])[];
   static readonly name = 'Val';
   readonly [Symbol.toStringTag] = Val.name;
 
@@ -9,7 +9,7 @@ export class Val {
    * create val from array
    * @param array
    */
-  constructor(array: (readonly [number, number])[]) {
+  constructor(array: readonly (readonly [number, number])[]) {
     const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
     arr_.forEach(([basis, exp]) => {
       if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
@@ -57,7 +57,7 @@ export class Val {
   }
 
   /**
-   *
+   * into string from of `basis1;exp1,basis2;exp2,...`
    * @returns
    */
   toString() {
@@ -100,7 +100,7 @@ export class Val {
   }
 
   /**
-   * return mutable array
+   * return mutable copy of array
    * @returns
    */
   getArray(): [number, number][] {

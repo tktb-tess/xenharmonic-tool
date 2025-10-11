@@ -7,7 +7,7 @@ import { bailliePSW } from '@tktb-tess/util-fns';
  * @param i
  * @returns
  */
-const getPrimesLte = (i: number) => {
+export const getPrimesLte = (i: number) => {
   return [...Array(i)]
     .map((_, i) => BigInt(i + 1))
     .filter((n) => bailliePSW(n))
@@ -20,7 +20,7 @@ const getPrimesLte = (i: number) => {
  * @param maxEdo
  * @returns
  */
-const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
+export const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
   if (maxEdo < 1) throw Error('`maxEdo` must be positive');
   return [...Array(maxEdo)]
     .map((_, i) => i + 1)
@@ -40,7 +40,7 @@ const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
  * @param mnz monzo
  * @param val val
  */
-const isTemperedOut = (val: Val, mnz: Monzo) => {
+export const isTemperedOut = (val: Val, mnz: Monzo) => {
   return braket(val, mnz) === 0;
 };
 
@@ -49,7 +49,7 @@ const isTemperedOut = (val: Val, mnz: Monzo) => {
  * @param mnz monzo
  * @param val val
  */
-const braket = (val: Val, mnz: Monzo) => {
+export const braket = (val: Val, mnz: Monzo) => {
   return mnz
     .getArray()
     .map(([basis, exp]) => {
@@ -66,12 +66,10 @@ const braket = (val: Val, mnz: Monzo) => {
  * @param i
  * @returns
  */
-const decideLength = (i: number) => {
+export const decideLength = (i: number) => {
   if (i === 0) return 0;
   if (i < 4) {
     return i + 2;
   }
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
-
-export { getPrimesLte, getTemperOutEdos, braket, isTemperedOut, decideLength };

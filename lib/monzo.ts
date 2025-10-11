@@ -1,7 +1,7 @@
 import { getPrimesLte, decideLength } from './util';
 
 export class Monzo {
-  readonly #mnz: (readonly [number, number])[];
+  readonly #mnz: readonly (readonly [number, number])[];
   static readonly name = 'Monzo';
   readonly [Symbol.toStringTag] = Monzo.name;
 
@@ -9,7 +9,7 @@ export class Monzo {
    * create Monzo
    * @param array
    */
-  constructor(array: (readonly [number, number])[]) {
+  constructor(array: readonly (readonly [number, number])[]) {
     const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
     arr_.forEach(([basis, exp]) => {
       if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
@@ -62,7 +62,7 @@ export class Monzo {
   }
 
   /**
-   * into string
+   * into string from of `basis1:exp1,basis2:exp2,...`
    * @returns
    */
   toString() {
@@ -70,8 +70,8 @@ export class Monzo {
   }
 
   /**
-   * returns mutable array
-   * @returns
+   * returns mutable copy of array
+   * @returns mutable copy of array
    */
   getArray(): [number, number][] {
     return this.#mnz.map(([basis, exp]) => [basis, exp]);
@@ -185,9 +185,11 @@ export class Monzo {
   /**
    * returns array of period-seperated basis (or null) and monzo vector
    * @param monzo
-   * @returns `[period-separated basis string (if the same as normal basis, will be null), monzo vector string]`
+   * @returns
+   * basis: period-separated basis string (if the same as normal basis, will be null) \
+   * monzo: monzo vector string
    */
-  getMonzoVector(): [string | null, string] {
+  getMonzoVector() {
     const bases = this.#mnz.map(([b]) => b);
     const values = this.#mnz.map(([, v]) => v);
 
@@ -197,14 +199,18 @@ export class Monzo {
     );
 
     const vStr = values.length > 0 ? values.join('\x20') : '0';
-    return isEqualBasis(bases, pList)
-      ? [null, `[${vStr}\u27e9`]
-      : [`${bases.join('.')}`, `[${vStr}\u27e9`];
+
+    return {
+      basis: isEqualBasis(bases, pList) ? null : `${bases.join('.')}`,
+      monzo: `[${vStr}\u27e9`,
+    };
   }
 
   static isEqual(mnz1: Monzo, mnz2: Monzo) {
     return mnz1.toString() === mnz2.toString();
   }
+
+  // static fromRatio: (num: bigint, denom: bigint) => Val;
 }
 
 const isEqualBasis = (one: number[], another: number[]) => {
@@ -215,5 +221,3 @@ const isEqualBasis = (one: number[], another: number[]) => {
   }
   return true;
 };
-
-// const fromRatio: (num: bigint, denom: bigint) => Val;
