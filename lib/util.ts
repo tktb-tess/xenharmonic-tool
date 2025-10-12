@@ -54,22 +54,10 @@ export const braket = (val: Val, mnz: Monzo) => {
     .getArray()
     .map(([basis, exp]) => {
       const m = val.getArray().find(([b]) => basis === b);
-      if (!m) throw Error('cannot be found corresponding val basis');
+      if (!m)
+        throw Error(`Unexpected error: couldn't find corresponding val basis`);
       const [, vExp] = m;
       return exp * vExp;
     })
     .reduce((prev, cur) => prev + cur, 0);
-};
-
-/**
- * p_n <= n * (ln n + ln(ln n)) (n >= 4)
- * @param i
- * @returns
- */
-export const decideLength = (i: number) => {
-  if (i === 0) return 0;
-  if (i < 4) {
-    return i + 2;
-  }
-  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };

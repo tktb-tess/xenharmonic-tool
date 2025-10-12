@@ -7,10 +7,11 @@ settings:
 importers:
 
   .:
-    devDependencies:
+    dependencies:
       '@tktb-tess/util-fns':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.8.3
+        version: 0.8.3
+    devDependencies:
       '@types/node':
         specifier: ^24.6.2
         version: 24.6.2
@@ -420,9 +421,9 @@ packages:
   '@rushstack/ts-command-line@5.1.0':
     resolution: {integrity: sha512-ncUEFDUU/RMwCmQpwy8fcA3CenEV0ZsNg8m1IJYGVUVzC5WdfeeoDEWhMjNqjq9DYcE4VXTXwQwyAeGo3ugSLg==}
 
-  '@tktb-tess/util-fns@0.5.1':
-    resolution: {integrity: sha512-qjD8vvmjtrW9/10BIbUQIVvFVTnqBVmJw26QVNl14u6Cqrb263bEdGDyGDBuV3XTbPRCoqUBiC3XvU8Wd6vKQQ==}
-    engines: {node: ^22.0.0}
+  '@tktb-tess/util-fns@0.8.3':
+    resolution: {integrity: sha512-2w0//kWCBoAX3AGtv9dPI7IYy67tQIW8RZR7iTFAwN9dAbXm2i92z134fFAAqVkP/QYIgdG0NCCMIyEgUc2G3A==}
+    engines: {node: ^22, pnpm: ^10}
 
   '@types/argparse@1.0.38':
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
@@ -1353,7 +1354,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@tktb-tess/util-fns@0.5.1': {}
+  '@tktb-tess/util-fns@0.8.3': {}
 
   '@types/argparse@1.0.38': {}
 
