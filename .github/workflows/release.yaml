@@ -30,7 +30,7 @@ jobs:
 
       # needed for OIDC
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@v11.6
 
       - name: Install Dependencies
         run: pnpm i --frozen-lockfile
