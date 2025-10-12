@@ -11,6 +11,9 @@ export default defineConfig({
       fileName: 'bundle',
       formats: ['es'],
     },
+    rollupOptions: {
+      external: ['@tktb-tess/util-fns']
+    }
   },
   test: {
     testTimeout: 15000,
