@@ -54,7 +54,8 @@ export const braket = (val: Val, mnz: Monzo) => {
     .getArray()
     .map(([basis, exp]) => {
       const m = val.getArray().find(([b]) => basis === b);
-      if (!m) throw Error(`Unexpected error: couldn't find corresponding val basis`);
+      if (!m)
+        throw Error(`Unexpected error: couldn't find corresponding val basis`);
       const [, vExp] = m;
       return exp * vExp;
     })

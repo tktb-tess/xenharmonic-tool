@@ -19,7 +19,9 @@ const rows = mnzs.map(({ name, monzo }) => {
   const movtd = document.createElement('td');
   ntd.textContent = name;
   const cents = monzo.getCents();
-  mtd.textContent = `${cents < 0.1 ? cents.toExponential(4) : cents.toFixed(4)} cents`;
+  mtd.textContent = `${
+    cents < 0.1 ? cents.toExponential(4) : cents.toFixed(4)
+  } cents`;
   const { basis, monzo: monzoS } = monzo.getMonzoVector();
   movtd.textContent = basis ? `${basis}\u3000${monzoS}` : monzoS;
   tr.append(ntd, mtd, movtd);
