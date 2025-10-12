@@ -1,4 +1,12 @@
-import { getPrimesLte, decideLength } from './util';
+import { getPrimesLte } from './util';
+
+const decideLength = (i: number) => {
+  if (i === 0) return 0;
+  if (i < 4) {
+    return i + 2;
+  }
+  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
+};
 
 export class Monzo {
   readonly #mnz: readonly (readonly [number, number])[];

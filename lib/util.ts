@@ -61,17 +61,3 @@ export const braket = (val: Val, mnz: Monzo) => {
     })
     .reduce((prev, cur) => prev + cur, 0);
 };
-
-/**
- * determine length of number sequence enough to generate all prime of given max or less \
- * p_n <= n * (ln n + ln(ln n)) (n >= 4)
- * @param i
- * @returns
- */
-export const decideLength = (i: number) => {
-  if (i === 0) return 0;
-  if (i < 4) {
-    return i + 2;
-  }
-  return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
-};
