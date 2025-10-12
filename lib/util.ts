@@ -54,7 +54,7 @@ export const braket = (val: Val, mnz: Monzo) => {
     .getArray()
     .map(([basis, exp]) => {
       const m = val.getArray().find(([b]) => basis === b);
-      if (!m) throw Error('cannot be found corresponding val basis');
+      if (!m) throw Error(`Unexpected error: couldn't find corresponding val basis`);
       const [, vExp] = m;
       return exp * vExp;
     })
@@ -62,6 +62,7 @@ export const braket = (val: Val, mnz: Monzo) => {
 };
 
 /**
+ * determine length of number sequence enough to generate all prime of given max or less \
  * p_n <= n * (ln n + ln(ln n)) (n >= 4)
  * @param i
  * @returns

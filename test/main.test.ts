@@ -5,34 +5,7 @@ import {
   getTemperOutEdos,
   isTemperedOut,
 } from '@tktb-tess/xenharmonic-tool';
-
-type CommaType =
-  | {
-      readonly commaType: 'rational';
-      readonly monzo: (readonly [number, number])[];
-    }
-  | {
-      readonly commaType: 'irrational';
-      readonly ratio: string;
-      readonly cents: number;
-    };
-
-type CommaData = CommaType & {
-  readonly id: string;
-  readonly name: string[];
-  readonly colorName: readonly [string, string];
-  readonly namedBy?: string;
-};
-
-type CommaMetadata = {
-  readonly lastUpdate: string;
-  readonly numberOf: number;
-};
-
-type Commas = {
-  readonly metadata: CommaMetadata;
-  readonly commas: CommaData[];
-};
+import type { Commas } from '../frontend/vite-env';
 
 it('generating patent val correctly', () => {
   const val31edo = Val.patentValFor(31, 19);
@@ -127,7 +100,7 @@ it('parse comma list', async () => {
     .map(({ monzo, name }) => [name[0], new Monzo(monzo)] as const);
 
   const sample = JSON.stringify(Object.fromEntries(mnzs.slice(0, 10)));
-  // console.log(sample);
+
   expect(sample).includes('[');
 });
 
