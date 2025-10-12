@@ -39,13 +39,18 @@ it('generating monzo correctly 2', () => {
   expect(ratio1).toBe(ratio2);
 });
 
-it('managing empty array correctly', () => {
+it('managing empty array as unison', () => {
   const unison = new Monzo([]);
-  console.log('cent:', unison.getCents());
-  console.log('ratio:', unison.getRatio().join('/'));
-  console.log('Tenney height:', unison.getTenneyHeight());
-  console.log('TE norm:', unison.getTENorm());
-  expect(unison.getCents()).toBe(0);
+
+  const conds: boolean[] = [
+    unison.getCents() === 0,
+    unison.getRatio().join('/') === '1/1',
+    unison.getTenneyHeight() === 0,
+    unison.getTENorm() === 0,
+    unison.toString() === '',
+  ];
+
+  expect(conds.every((c) => c)).toBe(true);
 });
 
 describe('check tempering out Edos', () => {
