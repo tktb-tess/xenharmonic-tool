@@ -23,7 +23,7 @@ You can also use via CDN such as jsDelivr.
 
 <!-- ... or as an ES Module. -->
 <script type="module">
-    import { Monzo } from 'https://cdn.jsdelivr.net/npm/@tktb-tess/xenharmonic-tool@0.5/+esm';
+    import { Monzo } from 'https://cdn.jsdelivr.net/npm/@tktb-tess/xenharmonic-tool@0.5.0/+esm';
 </script>
 ```
 
