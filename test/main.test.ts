@@ -1,10 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import {
-  Monzo,
-  Val,
-  getTemperOutEdos,
-  isTemperedOut,
-} from '@tktb-tess/xenharmonic-tool';
+import { Monzo, Val, getTemperOutEdos, isTemperedOut } from '../lib/main';
 import type { Commas } from '../frontend/vite-env';
 
 it('generating patent val correctly', () => {

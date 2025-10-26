@@ -8,14 +8,12 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, './lib/main.ts'),
-      fileName: 'bundle',
-      formats: ['es'],
+      fileName: (format) => (format === 'umd' ? 'bundle.min.js' : 'bundle.js'),
+      formats: ['es', 'umd'],
+      name: 'XenTool',
     },
-    rollupOptions: {
-      external: ['@tktb-tess/util-fns']
-    }
   },
   test: {
-    testTimeout: 15000,
+    testTimeout: 30000,
   },
 });

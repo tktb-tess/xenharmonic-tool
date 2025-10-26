@@ -1,11 +1,11 @@
-import { Monzo } from '@tktb-tess/xenharmonic-tool';
+import { Monzo } from '../lib/main';
 import type { Commas } from './vite-env';
 
 const url = `https://tktb-tess.github.io/commas/out/commas.json`;
 
-const cmas: Commas = await fetch(url).then((r) => r.json());
+const c: Commas = await fetch(url).then((r) => r.json());
 
-const rationals = cmas.commas.filter((c) => c.commaType === 'rational');
+const rationals = c.commas.filter((c) => c.commaType === 'rational');
 
 const mnzs = rationals.map(({ name, monzo }) => ({
   name: name[0],

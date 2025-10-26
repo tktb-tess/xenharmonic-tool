@@ -12,6 +12,22 @@ ESM only.
 npm i @tktb-tess/xenharmonic-tool
 ```
 
+You can also use via CDN such as jsDelivr.
+
+```html
+<!-- You can import as a global variable ... -->
+<script src="https://cdn.jsdelivr.net/npm/@tktb-tess/xenharmonic-tool@0.5.0/dist/bundle.min.js"></script>
+<script type="module">
+    const { Monzo } = XenTool;
+</script>
+
+<!-- ... or as an ES Module. -->
+<script type="module">
+    import { Monzo } from 'https://cdn.jsdelivr.net/npm/@tktb-tess/xenharmonic-tool@0.5/+esm';
+</script>
+```
+
+
 ### Monzo
 
 ```ts
