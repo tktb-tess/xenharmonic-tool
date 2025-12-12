@@ -1,4 +1,4 @@
-import { Monzo } from '../lib/main';
+import * as X from '@tktb-tess/xenharmonic-tool';
 import type { Commas } from './vite-env';
 
 const url = `https://tktb-tess.github.io/commas/out/commas.json`;
@@ -9,7 +9,7 @@ const rationals = c.commas.filter((c) => c.commaType === 'rational');
 
 const mnzs = rationals.map(({ name, monzo }) => ({
   name: name[0],
-  monzo: new Monzo(monzo),
+  monzo: new X.Monzo(monzo),
 }));
 
 const rows = mnzs.map(({ name, monzo }) => {
@@ -34,3 +34,10 @@ const table = document.createElement('table');
 table.append(tbody);
 const app = document.getElementById('app')!;
 app.append(table);
+
+const o = { ...X, __proto__: null, [Symbol.toStringTag]: 'XenTool' } as const;
+
+Object.defineProperty(window, 'XenTool', {
+  value: o,
+  enumerable: true,
+});
