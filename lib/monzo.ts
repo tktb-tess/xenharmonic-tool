@@ -8,10 +8,12 @@ const decideLength = (i: number) => {
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
 
+const NAME = 'Monzo';
+
 export class Monzo {
   readonly #mnz: readonly (readonly [number, number])[];
-  static readonly name = 'Monzo';
-  readonly [Symbol.toStringTag] = Monzo.name;
+  static readonly name = NAME;
+  readonly [Symbol.toStringTag] = NAME;
 
   /**
    * create Monzo
