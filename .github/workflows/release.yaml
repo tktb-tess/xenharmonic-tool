@@ -18,19 +18,13 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
           registry-url: 'https://registry.npmjs.org'
-
-      # needed for OIDC
-      - name: Update npm
-        run: npm install -g npm@v11.6
 
       - name: Install Dependencies
         run: pnpm i --frozen-lockfile
