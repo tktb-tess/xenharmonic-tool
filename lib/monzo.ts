@@ -50,23 +50,28 @@ export class Monzo {
    * @returns
    */
   static parse(str: string) {
-    if (!str.match(/^(\d+:)?-?\d+(,(\d+:)?-?\d+)*$/g)) {
+    const reg1 = /^(?:\d+:)?-?\d+(?:,(?:\d+:)?-?\d+)*$/;
+    if (str.match(reg1) == null) {
       throw Error('could not parse');
     }
+
     const units = str.split(',');
-    const pList = getPrimesLte(decideLength(units.length)).slice(
-      0,
-      units.length
-    );
+    const pList = getPrimesLte(decideLength(units.length));
+
     const arr = units.map((s, i): [number, number] => {
-      if (s.match(/^-?\d+$/)) {
-        return [pList[i], Number(s)];
-      } else if (s.match(/^\d+:-?\d+$/)) {
-        const [b, e] = s.split(':');
-        return [Number(b), Number(e)];
-      } else {
-        throw Error('could not parse');
+      const reg2 = /^(?:(?<b>\d+):)?(?<e>-?\d+)$/;
+      const matched = s.match(reg2)?.groups;
+
+      if (!matched) {
+        throw Error('Could not parse');
       }
+
+      const b = matched.b as string | undefined;
+      const e = matched.e;
+
+      const basis = b == null ? pList[i] : Number.parseInt(b);
+      const exp = Number.parseInt(e);
+      return [basis, exp];
     });
     return new Monzo(arr);
   }
@@ -91,18 +96,13 @@ export class Monzo {
     return this.#mnz;
   }
 
-  static #getBases(left: Monzo, right: Monzo) {
-    const bases_ = left.#mnz.map(([b]) => b).concat(right.#mnz.map(([b]) => b));
-    return [...new Set(bases_)].sort((a, b) => a - b);
-  }
-
   /**
    * add two monzos
    * @param other
    * @returns
    */
   add(other: Monzo) {
-    const bases = Monzo.#getBases(this, other);
+    const bases = getBases(this, other);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
       const exp2 = other.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -118,7 +118,7 @@ export class Monzo {
    * @returns
    */
   subtract(right: Monzo) {
-    const bases = Monzo.#getBases(this, right);
+    const bases = getBases(this, right);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
       const exp2 = right.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -193,7 +193,7 @@ export class Monzo {
   }
 
   /**
-   * returns array of period-seperated basis (or null) and monzo vector
+   * returns array of period-separated basis (or null) and monzo vector
    * @param monzo
    * @returns
    * basis: period-separated basis string (if the same as normal basis, will be null) \
@@ -205,7 +205,7 @@ export class Monzo {
 
     const pList = getPrimesLte(decideLength(bases.length)).slice(
       0,
-      bases.length
+      bases.length,
     );
 
     const vStr = values.length > 0 ? values.join('\x20') : '0';
@@ -230,4 +230,12 @@ const isEqualBasis = (one: number[], another: number[]) => {
     if (one[i] !== another[i]) return false;
   }
   return true;
+};
+
+const getBases = (...monzos: Monzo[]) => {
+  const bases_ = monzos
+    .map((m) => m.getArray())
+    .map((m) => m.map(([b]) => b))
+    .flat();
+  return [...new Set(bases_)].sort((a, b) => a - b);
 };
