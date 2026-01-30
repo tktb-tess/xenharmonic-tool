@@ -8,10 +8,12 @@ const decideLength = (i: number) => {
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
 };
 
+const NAME = 'Val';
+
 export class Val {
   readonly #val: readonly (readonly [number, number])[];
-  static readonly name = 'Val';
-  readonly [Symbol.toStringTag] = Val.name;
+  static readonly name = NAME;
+  readonly [Symbol.toStringTag] = NAME;
 
   /**
    * create val from array
@@ -46,20 +48,28 @@ export class Val {
    * @returns
    */
   static parse(str: string) {
-    if (!str.match(/^(\d+;)?-?\d+(,(\d+;)?-?\d+)*$/g)) {
+    const reg1 = /^(?:\d+;)?-?\d+(?:,(?:\d+;)?-?\d+)*$/;
+    if (str.match(reg1) == null) {
       throw Error('cannot parse');
     }
+
     const units = str.split(',');
     const pList = getPrimesLte(decideLength(units.length));
+
     const arr: [number, number][] = units.map((s, i) => {
-      if (s.match(/^-?\d+$/g)) {
-        return [pList[i], Number(s)];
-      } else if (s.match(/^\d+;-?\d+$/g)) {
-        const [b, e] = s.split(';');
-        return [Number(b), Number(e)];
-      } else {
-        throw Error('cannot parse');
+      const reg2 = /^(?:(?<b>\d+);)?(?<e>-?\d+)$/;
+      const matched = s.match(reg2)?.groups;
+
+      if (!matched) {
+        throw Error('Could not parse');
       }
+
+      const b = matched.b as string | undefined;
+      const e = matched.e;
+
+      const basis = b == null ? pList[i] : Number.parseInt(b);
+      const exp = Number.parseInt(e);
+      return [basis, exp];
     });
     return new Val(arr);
   }
