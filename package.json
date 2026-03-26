@@ -35,18 +35,18 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.5.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^7.3.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.1"
   },
   "dependencies": {
-    "@tktb-tess/util-fns": "^0.11.3"
+    "@tktb-tess/util-fns": "^0.11.4"
   },
   "volta": {
     "node": "24.13.0"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.33.0"
 }

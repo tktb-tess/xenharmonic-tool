@@ -13,7 +13,10 @@ const NAME = 'Val';
 export class Val {
   readonly #val: readonly (readonly [number, number])[];
   static readonly name = NAME;
-  readonly [Symbol.toStringTag] = NAME;
+
+  get [Symbol.toStringTag]() {
+    return NAME;
+  }
 
   /**
    * create val from array
@@ -21,6 +24,7 @@ export class Val {
    */
   constructor(array: readonly (readonly [number, number])[]) {
     const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
+
     arr_.forEach(([basis, exp]) => {
       if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
         throw Error('invalid array');
@@ -49,7 +53,8 @@ export class Val {
    */
   static parse(str: string) {
     const reg1 = /^(?:\d+;)?-?\d+(?:,(?:\d+;)?-?\d+)*$/;
-    if (str.match(reg1) == null) {
+
+    if (!reg1.test(str)) {
       throw Error('cannot parse');
     }
 
@@ -58,7 +63,7 @@ export class Val {
 
     const arr: [number, number][] = units.map((s, i) => {
       const reg2 = /^(?:(?<b>\d+);)?(?<e>-?\d+)$/;
-      const matched = s.match(reg2)?.groups;
+      const matched = reg2.exec(s)?.groups;
 
       if (!matched) {
         throw Error('Could not parse');
@@ -82,6 +87,17 @@ export class Val {
     return this.#val.map(([basis, exp]) => `${basis};${exp}`).join(',');
   }
 
+  [Symbol.toPrimitive](hint: 'string' | 'number' | 'default') {
+    switch (hint) {
+      case 'string': {
+        return this.toString();
+      }
+      default: {
+        return undefined;
+      }
+    }
+  }
+
   /**
    * return patent val for given EDO and limit
    * @param edo
@@ -89,8 +105,8 @@ export class Val {
    * @returns
    */
   static patentValFor(edo: number, limit: number) {
-    if (edo < 1) throw Error('`edo` must be positive');
-    if (limit < 2) throw Error('`limit` must be 2 or larger');
+    if (edo < 1) throw RangeError('`edo` must be positive');
+    if (limit < 2) throw RangeError('`limit` must be 2 or larger');
 
     const pList = getPrimesLte(limit).filter((p) => p <= limit);
 

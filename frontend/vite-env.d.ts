@@ -1,22 +1,24 @@
 /// <reference types="vite/client" />
 
-type CommaType =
-  | {
-      readonly commaType: 'rational';
-      readonly monzo: (readonly [number, number])[];
-    }
-  | {
-      readonly commaType: 'irrational';
-      readonly ratio: string;
-      readonly cents: number;
-    };
-
-type CommaData = CommaType & {
+interface BaseCoomaData {
   readonly id: string;
   readonly name: string[];
   readonly colorName: readonly [string, string];
   readonly namedBy?: string;
-};
+}
+
+interface RationalCommaData extends BaseCoomaData {
+  readonly commaType: 'rational';
+  readonly monzo: (readonly [number, number])[];
+}
+
+interface IrrationalCommaData extends BaseCoomaData {
+  readonly commaType: 'irrational';
+  readonly ratio: string;
+  readonly cents: number;
+}
+
+type CommaData = RationalCommaData | IrrationalCommaData;
 
 type CommaMetadata = {
   readonly lastUpdate: string;
@@ -28,4 +30,4 @@ type Commas = {
   readonly commas: CommaData[];
 };
 
-export type { Commas };
+export { Commas };

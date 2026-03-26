@@ -13,7 +13,10 @@ const NAME = 'Monzo';
 export class Monzo {
   readonly #mnz: readonly (readonly [number, number])[];
   static readonly name = NAME;
-  readonly [Symbol.toStringTag] = NAME;
+
+  get [Symbol.toStringTag]() {
+    return NAME;
+  }
 
   /**
    * create Monzo
@@ -21,6 +24,7 @@ export class Monzo {
    */
   constructor(array: readonly (readonly [number, number])[]) {
     const arr_: [number, number][] = array.map(([b, e]) => [b, e]);
+
     arr_.forEach(([basis, exp]) => {
       if (!Number.isFinite(basis) || !Number.isFinite(exp)) {
         throw Error('invalid array');
@@ -51,7 +55,7 @@ export class Monzo {
    */
   static parse(str: string) {
     const reg1 = /^(?:\d+:)?-?\d+(?:,(?:\d+:)?-?\d+)*$/;
-    if (str.match(reg1) == null) {
+    if (!reg1.test(str)) {
       throw Error('could not parse');
     }
 
@@ -60,7 +64,7 @@ export class Monzo {
 
     const arr = units.map((s, i): [number, number] => {
       const reg2 = /^(?:(?<b>\d+):)?(?<e>-?\d+)$/;
-      const matched = s.match(reg2)?.groups;
+      const matched = reg2.exec(s)?.groups;
 
       if (!matched) {
         throw Error('Could not parse');
@@ -71,6 +75,7 @@ export class Monzo {
 
       const basis = b == null ? pList[i] : Number.parseInt(b);
       const exp = Number.parseInt(e);
+
       return [basis, exp];
     });
     return new Monzo(arr);
@@ -82,6 +87,20 @@ export class Monzo {
    */
   toString() {
     return this.#mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
+  }
+
+  [Symbol.toPrimitive](hint: 'number' | 'string' | 'default') {
+    switch (hint) {
+      case 'string': {
+        return this.toString();
+      }
+      case 'number': {
+        return this.getCents();
+      }
+      case 'default': {
+        return this.toString();
+      }
+    }
   }
 
   /**
