@@ -1,3 +1,49 @@
-body {
-  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+@font-face {
+  font-family: 'inter-variable';
+  src: local('Inter');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'inter-variable';
+  src: local('Inter Italic');
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'noto-sans-jp-v';
+  src: local('Noto Sans JP');
+  font-display: swap;
+}
+
+*,
+::before,
+::after,
+::backdrop {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font: unset;
+  background: unset;
+  border: unset;
+}
+
+:root {
+  font-family: 'inter-variable', 'noto-sans-jp-v', sans-serif;
+  font-feature-settings: 'case', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03';
+  font-optical-sizing: auto;
+  text-spacing-trim: trim-start;
+  text-autospace: normal;
+  line-break: strict;
+  line-height: 1.5;
+}
+
+sup, sub {
+  font-size: 0.9em;
+}
+
+.tnum {
+  font-feature-settings: 'case', 'cv01', 'cv05', 'cv08', 'cv10', 'cv07', 'ss03', 'tnum';
 }

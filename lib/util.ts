@@ -21,7 +21,7 @@ export const getPrimesLte = (i: number) => {
  * @returns
  */
 export const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
-  if (maxEdo < 1) throw Error('`maxEdo` must be positive');
+  if (maxEdo < 1) throw RangeError('`maxEdo` must be positive');
   return [...Array(maxEdo)]
     .map((_, i) => i + 1)
     .filter((edo) => {
