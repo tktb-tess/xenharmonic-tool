@@ -55,7 +55,7 @@ export class Monzo {
    */
   static parse(str: string) {
     const reg1 = /^(?:\d+:)?-?\d+(?:,(?:\d+:)?-?\d+)*$/;
-    if (reg1.exec(str) == null) {
+    if (!reg1.test(str)) {
       throw Error('could not parse');
     }
 

@@ -78,7 +78,7 @@ describe('detecting tempering out correctly', () => {
 
   it('marvel comma', () => {
     expect([val22, val31].every((val) => isTemperedOut(val, marvelComma))).toBe(
-      true
+      true,
     );
   });
 
@@ -99,9 +99,8 @@ it('parse comma list', async () => {
     .filter((c) => c.commaType === 'rational')
     .map(({ monzo, name }) => [name[0], new Monzo(monzo)] as const);
 
-  const sample = JSON.stringify(Object.fromEntries(mnzs.slice(0, 10)));
-
-  expect(sample).includes('[');
+  const sample = Object.fromEntries(mnzs.slice(0, 10));
+  expect(JSON.stringify(sample)).includes('[');
 });
 
 describe('stringify and parse', () => {
@@ -111,6 +110,7 @@ describe('stringify and parse', () => {
 
     expect(Monzo.isEqual(mnz, mnz2)).toBe(true);
   });
+
   it('val', () => {
     const val = Val.patentValFor(29, 13);
     const val2 = Val.parse(val.toString());
