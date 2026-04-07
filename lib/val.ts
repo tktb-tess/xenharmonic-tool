@@ -1,4 +1,5 @@
 import { getPrimesLte } from './util';
+import { strictAt } from './strict_at';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -38,8 +39,8 @@ export class Val {
 
     // 重複する基底を消す
     for (let i = 0; i < arr_.length - 1; i++) {
-      if (arr_[i][0] === arr_[i + 1][0]) {
-        arr_[i][1] = 0;
+      if (strictAt(arr_, i)[0] === strictAt(arr_, i + 1)[0]) {
+        strictAt(arr_, i)[1] = 0;
       }
     }
 
@@ -69,10 +70,13 @@ export class Val {
         throw Error('Could not parse');
       }
 
-      const b = matched.b as string | undefined;
-      const e = matched.e;
+      const { b, e } = matched;
 
-      const basis = b == null ? pList[i] : Number.parseInt(b);
+      if (!e) {
+        throw TypeError('unexpected: `e` is undefined');
+      }
+
+      const basis = b == null ? strictAt(pList, i) : Number.parseInt(b);
       const exp = Number.parseInt(e);
       return [basis, exp];
     });

@@ -1,4 +1,5 @@
 import { getPrimesLte } from './util';
+import { strictAt } from './strict_at';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -38,10 +39,11 @@ export class Monzo {
 
     // 重複する基底を全部足し合わせる
     // その後前の方を0にする
+    // i, i + 1 は絶対範囲内
     for (let i = 0; i < arr_.length - 1; i++) {
-      if (arr_[i][0] === arr_[i + 1][0]) {
-        arr_[i + 1][1] += arr_[i][1];
-        arr_[i][1] = 0;
+      if (strictAt(arr_, i)[0] === strictAt(arr_, i + 1)[0]) {
+        strictAt(arr_, i + 1)[1] += strictAt(arr_, i)[1];
+        strictAt(arr_, i)[1] = 0;
       }
     }
 
@@ -70,11 +72,14 @@ export class Monzo {
         throw Error('Could not parse');
       }
 
-      const b = matched.b as string | undefined;
-      const e = matched.e;
+      const { b, e } = matched;
 
-      const basis = b == null ? pList[i] : Number.parseInt(b);
-      const exp = Number.parseInt(e);
+      if (!e) {
+        throw TypeError('unexpected: `e` is undefined');
+      }
+
+      const basis = b == null ? strictAt(pList, i) : Number.parseInt(b);
+      const exp = Number.parseInt(e ?? '');
 
       return [basis, exp];
     });
