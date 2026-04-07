@@ -36,17 +36,13 @@
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "unplugin-dts": "1.0.0-beta.6",
-    "vite": "^7.3.1",
+    "vite": "^8.0.3",
     "vitest": "^4.1.1"
   },
   "dependencies": {
     "@tktb-tess/util-fns": "^0.11.4"
-  },
-  "volta": {
-    "node": "24.13.0"
   },
   "packageManager": "pnpm@10.33.0"
 }
