@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     permissions:
       contents: read
