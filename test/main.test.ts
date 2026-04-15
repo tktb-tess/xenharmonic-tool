@@ -1,6 +1,6 @@
 import { it, expect, describe } from 'vitest';
 import { Monzo, Val, getTemperOutEdos, isTemperedOut } from '../lib/main';
-import type { Commas } from '../frontend/vite-env';
+import type { CommaData } from '../frontend/vite-env';
 
 it('generating patent val correctly', () => {
   const val31edo = Val.patentValFor(31, 19);
@@ -92,8 +92,8 @@ describe('detecting tempering out correctly', () => {
 });
 
 it('parse comma list', async () => {
-  const url = 'https://tktb-tess.github.io/commas/out/commas.json';
-  const { commas }: Commas = await fetch(url).then((r) => r.json());
+  const json = (await import('./assets/commas.json')).default;
+  const commas = json.commas as unknown as CommaData[];
 
   const mnzs = commas
     .filter((c) => c.commaType === 'rational')

@@ -94,20 +94,6 @@ export class Monzo {
     return this.#mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
   }
 
-  [Symbol.toPrimitive](hint: 'number' | 'string' | 'default') {
-    switch (hint) {
-      case 'string': {
-        return this.toString();
-      }
-      case 'number': {
-        return this.getCents();
-      }
-      case 'default': {
-        return this.toString();
-      }
-    }
-  }
-
   /**
    * returns mutable copy of array
    * @returns mutable copy of array

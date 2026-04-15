@@ -91,17 +91,6 @@ export class Val {
     return this.#val.map(([basis, exp]) => `${basis};${exp}`).join(',');
   }
 
-  [Symbol.toPrimitive](hint: 'string' | 'number' | 'default') {
-    switch (hint) {
-      case 'string': {
-        return this.toString();
-      }
-      default: {
-        return undefined;
-      }
-    }
-  }
-
   /**
    * return patent val for given EDO and limit
    * @param edo
