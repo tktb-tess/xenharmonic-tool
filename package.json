@@ -21,28 +21,27 @@
     "url": "https://github.com/tktb-tess/xenharmonic-tool.git"
   },
   "homepage": "https://github.com/tktb-tess/xenharmonic-tool/blob/main/README.md",
-  "main": "./dist/bundle.js",
-  "module": "./dist/bundle.js",
-  "browser": "./dist/bundle.min.js",
-  "types": "./dist/main.d.ts",
+  "browser": "./dist/iife/bundle.min.js",
   "exports": {
     "types": "./dist/main.d.ts",
-    "import": "./dist/bundle.js"
+    "import": "./dist/esm/bundle.js"
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "test": "vitest run"
+    "build:esm": "vite build",
+    "build:iife": "vite build --config vite.config.iife.ts",
+    "build": "pnpm build:esm && pnpm build:iife",
+    "test": "vitest --run"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^24.12.2",
     "typescript": "^6.0.2",
     "unplugin-dts": "1.0.0-beta.6",
-    "vite": "^8.0.3",
-    "vitest": "^4.1.1"
+    "vite": "^8.0.8",
+    "vitest": "^4.1.4"
   },
   "dependencies": {
-    "@tktb-tess/util-fns": "^0.11.4"
+    "@tktb-tess/util-fns": "^0.13.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

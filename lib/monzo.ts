@@ -1,5 +1,5 @@
 import { getPrimesLte } from './util';
-import { strictAt } from './strict_at';
+import { strictAt } from '@tktb-tess/util-fns/util';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;

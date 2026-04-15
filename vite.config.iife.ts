@@ -1,20 +1,16 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
-import dts from 'unplugin-dts/vite';
 
 export default defineConfig({
-  plugins: [dts()],
-  server: {
-    port: 8000,
-  },
   build: {
     lib: {
       entry: resolve(__dirname, './lib/main.ts'),
-      fileName: () => 'bundle.js',
-      formats: ['es'],
+      fileName: () => 'bundle.min.js',
+      formats: ['iife'],
+      name: 'XenTool',
     },
-    outDir: 'dist/esm'
+    outDir: 'dist/iife'
   },
   test: {
     testTimeout: 30000,
