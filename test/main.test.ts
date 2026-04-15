@@ -97,7 +97,7 @@ it('parse comma list', async () => {
 
   const mnzs = commas
     .filter((c) => c.commaType === 'rational')
-    .map(({ monzo, name }) => [name[0], new Monzo(monzo)] as const);
+    .map(({ monzo, name }) => [name[0]!, new Monzo(monzo)] as const);
 
   const sample = Object.fromEntries(mnzs.slice(0, 10));
   expect(JSON.stringify(sample)).includes('[');
