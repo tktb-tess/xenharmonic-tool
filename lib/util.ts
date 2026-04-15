@@ -1,6 +1,6 @@
 import { Monzo } from './monzo';
 import { Val } from './val';
-import { bailliePSW } from '@tktb-tess/util-fns';
+import { bailliePSW } from '@tktb-tess/util-fns/baillie_psw';
 
 /**
  * returns an array of primes in the range of `i` or less

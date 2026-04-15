@@ -1,5 +1,5 @@
 import { getPrimesLte } from './util';
-import { strictAt } from './strict_at';
+import { strictAt } from '@tktb-tess/util-fns/util';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -89,17 +89,6 @@ export class Val {
    */
   toString() {
     return this.#val.map(([basis, exp]) => `${basis};${exp}`).join(',');
-  }
-
-  [Symbol.toPrimitive](hint: 'string' | 'number' | 'default') {
-    switch (hint) {
-      case 'string': {
-        return this.toString();
-      }
-      default: {
-        return undefined;
-      }
-    }
   }
 
   /**

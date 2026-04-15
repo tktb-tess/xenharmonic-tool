@@ -14,7 +14,8 @@
     "moduleDetection": "force",
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "./dist",
+    "declarationDir": "./dist/esm",
+    "verbatimModuleSyntax": true,
 
     /* Linting */
     "strict": true,

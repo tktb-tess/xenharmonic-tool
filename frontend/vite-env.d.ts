@@ -30,4 +30,4 @@ type Commas = {
   readonly commas: CommaData[];
 };
 
-export { Commas };
+export { Commas, CommaData };

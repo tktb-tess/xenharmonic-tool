@@ -1,5 +1,5 @@
 import { getPrimesLte } from './util';
-import { strictAt } from './strict_at';
+import { strictAt } from '@tktb-tess/util-fns/util';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -92,20 +92,6 @@ export class Monzo {
    */
   toString() {
     return this.#mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
-  }
-
-  [Symbol.toPrimitive](hint: 'number' | 'string' | 'default') {
-    switch (hint) {
-      case 'string': {
-        return this.toString();
-      }
-      case 'number': {
-        return this.getCents();
-      }
-      case 'default': {
-        return this.toString();
-      }
-    }
   }
 
   /**
