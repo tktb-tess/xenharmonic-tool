@@ -1,6 +1,12 @@
 import './main.css';
-import * as X from '@tktb-tess/xenharmonic-tool';
+import * as Monzo from '@tktb-tess/xenharmonic-tool/monzo';
+import * as Val from '@tktb-tess/xenharmonic-tool/val';
+import * as Util from '@tktb-tess/xenharmonic-tool/util';
 import type { Commas } from './vite-env';
+
+console.log('Monzo', Monzo);
+console.log('Val', Val);
+console.log('Util', Util);
 
 const url = `https://tktb-tess.github.io/commas/out/commas.json`;
 
@@ -10,7 +16,7 @@ const rationals = c.commas.filter((c) => c.commaType === 'rational');
 
 const mnzs = rationals.map(({ name, monzo }) => ({
   name: name[0],
-  monzo: new X.Monzo(monzo),
+  monzo: new Monzo.Monzo(monzo),
 }));
 
 const formatCents = (cents: number) => {
@@ -59,7 +65,13 @@ if (!(app instanceof HTMLDivElement)) {
 }
 app.append(table);
 
-const o = { ...X, __proto__: null, [Symbol.toStringTag]: 'XenTool' } as const;
+const o = {
+  ...Monzo,
+  ...Val,
+  ...Util,
+  __proto__: null,
+  [Symbol.toStringTag]: 'XenTool',
+} as const;
 
 Object.defineProperty(window, 'XenTool', {
   value: o,

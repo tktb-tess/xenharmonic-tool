@@ -54,7 +54,7 @@ const jacobiSymbol = (a: bigint, n: bigint) => {
   return n === 1n ? result : 0n;
 };
 
-export const isSquare = (n: bigint) => {
+const isSquare = (n: bigint) => {
   if (n < 0n) return false;
   if (n === 0n) return true;
   let x = 1n;
@@ -144,7 +144,7 @@ const UVSubscript = (
   return [U, V];
 };
 
-const lucasSPP = (n: bigint, D: bigint, P: bigint, Q: bigint) => {
+const strongLucas = (n: bigint, D: bigint, P: bigint, Q: bigint) => {
   if (n % 2n !== 1n) {
     throw RangeError('`n` must be odd');
   }
@@ -293,5 +293,5 @@ export const bailliePSW = (n: bigint): boolean => {
   if (j === 0n) return false;
 
   const Q = (1n - D) / 4n;
-  return lucasSPP(n, D, 1n, Q);
+  return strongLucas(n, D, 1n, Q);
 };
