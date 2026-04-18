@@ -3,6 +3,8 @@ import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 import dts from 'unplugin-dts/vite';
 
+const names = ['monzo', 'val', 'util', 'main'];
+
 export default defineConfig({
   plugins: [dts()],
   server: {
@@ -10,11 +12,13 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, './lib/main.ts'),
-      fileName: () => 'bundle.js',
+      entry: names.map((name) => resolve(__dirname, `./lib/${name}.ts`)),
+      fileName: (_, fileName) => `${fileName}.js`,
       formats: ['es'],
+      
     },
-    outDir: 'dist/esm'
+    minify: 'oxc',
+    outDir: 'dist/esm',
   },
   test: {
     testTimeout: 30000,

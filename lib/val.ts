@@ -1,5 +1,5 @@
-import { getPrimesLte } from './util';
-import { strictAt } from '@tktb-tess/util-fns/util';
+import { getPrimesLte } from './get_primes_lte';
+import { strictAt } from './strict_at';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -11,13 +11,15 @@ const decideLength = (i: number) => {
 
 const NAME = 'Val';
 
-export class Val {
+declare const __VAL_BRAND__: unique symbol;
+
+interface Val {
+  readonly [__VAL_BRAND__]: unknown;
+}
+
+class Val {
   readonly #val: readonly (readonly [number, number])[];
   static readonly name = NAME;
-
-  get [Symbol.toStringTag]() {
-    return NAME;
-  }
 
   /**
    * create val from array
@@ -87,9 +89,9 @@ export class Val {
    * into string from of `basis1;exp1,basis2;exp2,...`
    * @returns
    */
-  toString() {
+  toString = () => {
     return this.#val.map(([basis, exp]) => `${basis};${exp}`).join(',');
-  }
+  };
 
   /**
    * return patent val for given EDO and limit
@@ -130,20 +132,20 @@ export class Val {
    * return mutable copy of array
    * @returns
    */
-  getArray(): [number, number][] {
+  getArray = (): [number, number][] => {
     return this.#val.map(([a, b]) => [a, b]);
-  }
+  };
 
-  toJSON() {
+  toJSON = () => {
     return this.#val;
-  }
+  };
 
   /**
    * add two val
    * @param other
    * @returns
    */
-  add(other: Val) {
+  add = (other: Val) => {
     const bases = Val.#getBases(this, other);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#val.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -152,14 +154,14 @@ export class Val {
     });
 
     return new Val(results);
-  }
+  };
 
   /**
    * subtract `other` from `this`
    * @param other
    * @returns
    */
-  subtract(other: Val) {
+  subtract = (other: Val) => {
     const bases = Val.#getBases(this, other);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#val.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -168,5 +170,12 @@ export class Val {
     });
 
     return new Val(results);
-  }
+  };
 }
+
+Object.defineProperty(Val.prototype, Symbol.toStringTag, {
+  value: NAME,
+  enumerable: true,
+});
+
+export { Val };

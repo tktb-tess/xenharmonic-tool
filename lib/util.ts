@@ -1,17 +1,31 @@
 import { Monzo } from './monzo';
 import { Val } from './val';
-import { bailliePSW } from '@tktb-tess/util-fns/baillie_psw';
 
 /**
- * returns an array of primes in the range of `i` or less
- * @param i
- * @returns
+ * returns braket of val and monzo
+ * @param mnz monzo
+ * @param val val
  */
-export const getPrimesLte = (i: number) => {
-  return [...Array(i)]
-    .map((_, i) => BigInt(i + 1))
-    .filter((n) => bailliePSW(n))
-    .map((p) => Number(p));
+export const braket = (val: Val, mnz: Monzo) => {
+  return mnz
+    .getArray()
+    .map(([basis, exp]) => {
+      const m = val.getArray().find(([b]) => basis === b);
+      if (!m)
+        throw Error(`Unexpected error: couldn't find corresponding val basis`);
+
+      return exp * m[1];
+    })
+    .reduce((prev, cur) => prev + cur, 0);
+};
+
+/**
+ * whether the val tempers out the monzo
+ * @param mnz monzo
+ * @param val val
+ */
+export const isTemperedOut = (val: Val, mnz: Monzo) => {
+  return braket(val, mnz) === 0;
 };
 
 /**
@@ -33,31 +47,4 @@ export const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
         return braket === 0;
       });
     });
-};
-
-/**
- * whether the val tempers out the monzo
- * @param mnz monzo
- * @param val val
- */
-export const isTemperedOut = (val: Val, mnz: Monzo) => {
-  return braket(val, mnz) === 0;
-};
-
-/**
- * returns braket of val and monzo
- * @param mnz monzo
- * @param val val
- */
-export const braket = (val: Val, mnz: Monzo) => {
-  return mnz
-    .getArray()
-    .map(([basis, exp]) => {
-      const m = val.getArray().find(([b]) => basis === b);
-      if (!m)
-        throw Error(`Unexpected error: couldn't find corresponding val basis`);
-      const [, vExp] = m;
-      return exp * vExp;
-    })
-    .reduce((prev, cur) => prev + cur, 0);
 };

@@ -40,8 +40,5 @@
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
   },
-  "dependencies": {
-    "@tktb-tess/util-fns": "^0.13.0"
-  },
   "packageManager": "pnpm@10.33.0"
 }
