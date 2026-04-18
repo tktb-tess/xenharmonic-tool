@@ -15,9 +15,7 @@ export default defineConfig({
       entry: names.map((name) => resolve(__dirname, `./lib/${name}.ts`)),
       fileName: (_, fileName) => `${fileName}.js`,
       formats: ['es'],
-      
     },
-    minify: 'oxc',
     outDir: 'dist/esm',
   },
   test: {
