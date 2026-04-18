@@ -1,5 +1,5 @@
-import { getPrimesLte } from './util';
-import { strictAt } from '@tktb-tess/util-fns/util';
+import { getPrimesLte } from './get_primes_lte';
+import { strictAt } from './strict_at';
 
 const decideLength = (i: number) => {
   if (i === 0) return 0;
@@ -10,14 +10,15 @@ const decideLength = (i: number) => {
 };
 
 const NAME = 'Monzo';
+declare const __MNZ_BRAND__: unique symbol;
 
-export class Monzo {
+interface Monzo {
+  readonly [__MNZ_BRAND__]: unknown;
+}
+
+class Monzo {
   readonly #mnz: readonly (readonly [number, number])[];
   static readonly name = NAME;
-
-  get [Symbol.toStringTag]() {
-    return NAME;
-  }
 
   /**
    * create Monzo
@@ -90,28 +91,28 @@ export class Monzo {
    * into string from of `basis1:exp1,basis2:exp2,...`
    * @returns
    */
-  toString() {
+  toString = () => {
     return this.#mnz.map(([basis, exp]) => `${basis}:${exp}`).join(',');
-  }
+  };
 
   /**
    * returns mutable copy of array
    * @returns mutable copy of array
    */
-  getArray(): [number, number][] {
+  getArray = (): [number, number][] => {
     return this.#mnz.map(([basis, exp]) => [basis, exp]);
-  }
+  };
 
-  toJSON() {
+  toJSON = () => {
     return this.#mnz;
-  }
+  };
 
   /**
    * add two monzos
    * @param other
    * @returns
    */
-  add(other: Monzo) {
+  add = (other: Monzo) => {
     const bases = getBases(this, other);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -120,14 +121,14 @@ export class Monzo {
     });
 
     return new Monzo(results);
-  }
+  };
 
   /**
    * subtract `right` from `this`
    * @param right
    * @returns
    */
-  subtract(right: Monzo) {
+  subtract = (right: Monzo) => {
     const bases = getBases(this, right);
     const results: [number, number][] = bases.map((basis) => {
       const exp1 = this.#mnz.find(([b]) => b === basis)?.at(1) ?? 0;
@@ -136,24 +137,24 @@ export class Monzo {
     });
 
     return new Monzo(results);
-  }
+  };
 
   /**
    * returns a cent value of an input monzo
    * @returns
    */
-  getCents() {
+  getCents = () => {
     return this.#mnz
       .map(([basis, exp]) => 1200 * exp * Math.log2(basis))
       .reduce((prev, cur) => prev + cur, 0);
-  }
+  };
 
   /**
    * returns a bigint array with length 2 representing a numerator and a denominator of an input monzo ratio
    * @param
    * @returns `[numerator, denominator]`
    */
-  getRatio(): [bigint, bigint] {
+  getRatio = (): [bigint, bigint] => {
     const num = this.#mnz
       .filter(([, exp]) => exp > 0)
       .map(([basis, exp]) => BigInt(basis) ** BigInt(exp))
@@ -165,42 +166,42 @@ export class Monzo {
       .reduce((prev, cur) => prev * cur, 1n);
 
     return [num, denom];
-  }
+  };
 
   /**
    * returns a Tenney height of an input monzo
    * @param
    * @returns
    */
-  getTenneyHeight() {
+  getTenneyHeight = () => {
     return this.#mnz
       .map(([basis, exp]) => Math.log2(basis) * Math.abs(exp))
       .reduce((prev, cur) => prev + cur, 0);
-  }
+  };
 
   /**
    * returns Tenney-Euclidean norm of input monzo
    * @param
    * @returns
    */
-  getTENorm() {
+  getTENorm = () => {
     const ms = this.#mnz
       .map(([basis, exp]) => (Math.log2(basis) * exp) ** 2)
       .reduce((prev, cur) => prev + cur, 0);
 
     return Math.sqrt(ms);
-  }
+  };
 
   /**
    * returns Venedetti height of input monzo
    * @param
    * @returns
    */
-  getVenedettiHeight() {
+  getVenedettiHeight = () => {
     return this.#mnz
       .map(([basis, exp]) => BigInt(basis) ** BigInt(Math.abs(exp)))
       .reduce((prev, cur) => prev * cur, 1n);
-  }
+  };
 
   /**
    * returns array of period-separated basis (or null) and monzo vector
@@ -209,7 +210,7 @@ export class Monzo {
    * basis: period-separated basis string (if the same as normal basis, will be null) \
    * monzo: monzo vector string
    */
-  getMonzoVector() {
+  getMonzoVector = () => {
     const bases = this.#mnz.map(([b]) => b);
     const values = this.#mnz.map(([, v]) => v);
 
@@ -224,7 +225,7 @@ export class Monzo {
       basis: isEqualBasis(bases, pList) ? null : `${bases.join('.')}`,
       monzo: `[${vStr}\u27e9`,
     };
-  }
+  };
 
   static isEqual(mnz1: Monzo, mnz2: Monzo) {
     return mnz1.toString() === mnz2.toString();
@@ -232,6 +233,11 @@ export class Monzo {
 
   // static fromRatio: (num: bigint, denom: bigint) => Val;
 }
+
+Object.defineProperty(Monzo.prototype, Symbol.toStringTag, {
+  value: NAME,
+  enumerable: true,
+});
 
 const isEqualBasis = (one: number[], another: number[]) => {
   if (one.length !== another.length) return false;
@@ -249,3 +255,5 @@ const getBases = (...monzos: Monzo[]) => {
     .flat();
   return [...new Set(bases_)].sort((a, b) => a - b);
 };
+
+export { Monzo };

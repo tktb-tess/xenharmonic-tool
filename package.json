@@ -23,8 +23,22 @@
   "homepage": "https://github.com/tktb-tess/xenharmonic-tool/blob/main/README.md",
   "browser": "./dist/iife/bundle.min.js",
   "exports": {
-    "types": "./dist/esm/main.d.ts",
-    "import": "./dist/esm/bundle.js"
+    ".": {
+      "import": "./dist/esm/main.js",
+      "types": "./dist/esm/main.d.ts"
+    },
+    "./val": {
+      "import": "./dist/esm/val.js",
+      "types": "./dist/esm/val.d.ts"
+    },
+    "./monzo": {
+      "import": "./dist/esm/monzo.js",
+      "types": "./dist/esm/monzo.d.ts"
+    },
+    "./util": {
+      "import": "./dist/esm/util.js",
+      "types": "./dist/esm/util.d.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -39,9 +53,6 @@
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
-  },
-  "dependencies": {
-    "@tktb-tess/util-fns": "^0.13.0"
   },
   "packageManager": "pnpm@10.33.0"
 }
