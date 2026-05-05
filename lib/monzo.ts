@@ -57,6 +57,9 @@ class Monzo {
    * @returns
    */
   static parse(str: string) {
+    if (str === '') {
+      return new Monzo([]);
+    }
     const reg1 = /^(?:\d+:)?-?\d+(?:,(?:\d+:)?-?\d+)*$/;
     if (!reg1.test(str)) {
       throw Error('could not parse');
@@ -219,7 +222,7 @@ class Monzo {
       bases.length,
     );
 
-    const vStr = values.length > 0 ? values.join('\x20') : '0';
+    const vStr = values.length > 0 ? values.join('\x20') : '';
 
     return {
       basis: isEqualBasis(bases, pList) ? null : `${bases.join('.')}`,

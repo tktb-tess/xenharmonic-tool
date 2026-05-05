@@ -1,6 +1,6 @@
 import './main.css';
-import * as Monzo from '@tktb-tess/xenharmonic-tool/monzo';
-import * as Val from '@tktb-tess/xenharmonic-tool/val';
+import { Monzo } from '@tktb-tess/xenharmonic-tool/monzo';
+import { Val } from '@tktb-tess/xenharmonic-tool/val';
 import * as Util from '@tktb-tess/xenharmonic-tool/util';
 import type { Commas } from './vite-env';
 
@@ -8,7 +8,7 @@ console.log('Monzo', Monzo);
 console.log('Val', Val);
 console.log('Util', Util);
 
-const url = `https://tktb-tess.github.io/commas/out/commas.json`;
+const url = `https://tktb-tess.github.io/commas/out/commas-neue.json`;
 
 const c: Commas = await fetch(url).then((r) => r.json());
 
@@ -16,7 +16,7 @@ const rationals = c.commas.filter((c) => c.commaType === 'rational');
 
 const mnzs = rationals.map(({ name, monzo }) => ({
   name: name[0],
-  monzo: new Monzo.Monzo(monzo),
+  monzo: Monzo.parse(monzo),
 }));
 
 const formatCents = (cents: number) => {
@@ -63,6 +63,7 @@ const app = document.getElementById('app');
 if (!(app instanceof HTMLDivElement)) {
   throw TypeError(Object.prototype.toString.call(app));
 }
+
 app.append(table);
 
 const o = {
