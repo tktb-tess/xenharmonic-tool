@@ -9,7 +9,7 @@ interface BaseCoomaData {
 
 interface RationalCommaData extends BaseCoomaData {
   readonly commaType: 'rational';
-  readonly monzo: (readonly [number, number])[];
+  readonly monzo: string;
 }
 
 interface IrrationalCommaData extends BaseCoomaData {
