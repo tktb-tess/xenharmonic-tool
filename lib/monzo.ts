@@ -57,7 +57,8 @@ class Monzo {
    * @returns
    */
   static parse(str: string) {
-    if (str === '') {
+    // 空なら 1/1
+    if (str.trim() === '') {
       return new Monzo([]);
     }
     const reg1 = /^(?:\d+:)?-?\d+(?:,(?:\d+:)?-?\d+)*$/;
