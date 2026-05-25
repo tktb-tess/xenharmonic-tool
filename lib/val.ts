@@ -1,13 +1,13 @@
 import { getPrimesLte } from './get_primes_lte';
 import { strictAt } from './strict_at';
 
-const decideLength = (i: number) => {
+function decideLength(i: number) {
   if (i === 0) return 0;
   if (i < 4) {
     return i + 2;
   }
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
-};
+}
 
 const NAME = 'Val';
 

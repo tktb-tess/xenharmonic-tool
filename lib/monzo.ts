@@ -1,13 +1,13 @@
 import { getPrimesLte } from './get_primes_lte';
 import { strictAt } from './strict_at';
 
-const decideLength = (i: number) => {
+function decideLength(i: number) {
   if (i === 0) return 0;
   if (i < 4) {
     return i + 2;
   }
   return Math.ceil(i * (Math.log(i) + Math.log(Math.log(i))));
-};
+}
 
 const NAME = 'Monzo';
 declare const __MNZ_BRAND__: unique symbol;
@@ -243,21 +243,21 @@ Object.defineProperty(Monzo.prototype, Symbol.toStringTag, {
   enumerable: true,
 });
 
-const isEqualBasis = (one: number[], another: number[]) => {
+function isEqualBasis(one: number[], another: number[]) {
   if (one.length !== another.length) return false;
   const { length } = one;
   for (let i = 0; i < length; i++) {
     if (one[i] !== another[i]) return false;
   }
   return true;
-};
+}
 
-const getBases = (...monzos: Monzo[]) => {
+function getBases(...monzos: Monzo[]) {
   const bases_ = monzos
     .map((m) => m.getArray())
     .map((m) => m.map(([b]) => b))
     .flat();
   return [...new Set(bases_)].sort((a, b) => a - b);
-};
+}
 
 export { Monzo };

@@ -6,7 +6,7 @@ import { Val } from './val';
  * @param mnz monzo
  * @param val val
  */
-export const braket = (val: Val, mnz: Monzo) => {
+export function braket(val: Val, mnz: Monzo) {
   return mnz
     .getArray()
     .map(([basis, exp]) => {
@@ -17,16 +17,16 @@ export const braket = (val: Val, mnz: Monzo) => {
       return exp * m[1];
     })
     .reduce((prev, cur) => prev + cur, 0);
-};
+}
 
 /**
  * whether the val tempers out the monzo
  * @param mnz monzo
  * @param val val
  */
-export const isTemperedOut = (val: Val, mnz: Monzo) => {
+export function isTemperedOut(val: Val, mnz: Monzo) {
   return braket(val, mnz) === 0;
-};
+}
 
 /**
  * returns an array of EDOs whose patent val tempers out input monzo
@@ -34,7 +34,7 @@ export const isTemperedOut = (val: Val, mnz: Monzo) => {
  * @param maxEdo
  * @returns
  */
-export const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
+export function getTemperOutEdos(maxEdo: number, ...monzos: Monzo[]) {
   if (maxEdo < 1) throw RangeError('`maxEdo` must be positive');
   return [...Array(maxEdo)]
     .map((_, i) => i + 1)
@@ -47,4 +47,4 @@ export const getTemperOutEdos = (maxEdo: number, ...monzos: Monzo[]) => {
         return braket === 0;
       });
     });
-};
+}
