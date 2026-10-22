@@ -1,7 +1,8 @@
-onlyBuiltDependencies:
-  - esbuild
 
 minimumReleaseAge: 2880
 
 minimumReleaseAgeExclude:
   - '@tktb-tess/*'
+
+allowBuilds:
+  esbuild: true
