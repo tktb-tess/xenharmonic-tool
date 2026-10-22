@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, './lib/main.ts'),
+      entry: resolve(import.meta.dirname, './lib/main.ts'),
       fileName: () => 'bundle.min.js',
       formats: ['iife'],
       name: 'XenTool',

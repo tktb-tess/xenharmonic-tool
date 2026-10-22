@@ -12,7 +12,9 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: names.map((name) => resolve(__dirname, `./lib/${name}.ts`)),
+      entry: names.map((name) =>
+        resolve(import.meta.dirname, `./lib/${name}.ts`),
+      ),
       fileName: (_, fileName) => `${fileName}.js`,
       formats: ['es'],
     },
